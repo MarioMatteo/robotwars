@@ -1,14 +1,23 @@
-#include <stdlib.h>  
+#ifndef MAPPA_H_
+#define MAPPA_H_
 
+#include <stdlib.h>  
 #include "Quadrante.h"
+#include <iostream>
+#include <vector>
+#include <string>
+#include <sstream>
 
 class Mappa
 {
 	private:
-		Quadrante quadranti [4];
-		int* pulisciCoordinate(int x, int y);
+		std::vector<Quadrante> quadranti;
+		void pulisciCoordinate(int x, int y, int coordinate[]);
 		
 	public:
+		Mappa(int dimensioneCasella);
+
+				~Mappa();
 		int checkQuadrante(int x, int y);
 		Quadrante getQuadrante(int i);	
 		void creaCasella(int x, int y);
@@ -18,19 +27,8 @@ class Mappa
 		void liberaCasella(int x, int y); 
 		Casella getCasella(int x, int y);
 		void toString();
+
 	
-	
-	Mappa(int dimensioneCasella)
-	{
-		int i = 0;
-		for(i = 0; i < 4; i++)
-		{
-			quadranti[i] = Quadrante(dimensioneCasella, i);
-		}
-	}
-	
-	~Mappa()
-	{
-		
-	}
 };
+
+#endif

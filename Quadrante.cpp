@@ -1,6 +1,17 @@
 
 #include "Quadrante.h"
+Quadrante::Quadrante(int _dimensioneCasella, int _quadrante)
+	{
+		dimensioneCasella = _dimensioneCasella;
+		numeroQuadrante = _quadrante;
+	}
 
+
+
+	Quadrante::~Quadrante()
+	{
+
+	}
 int	Quadrante::calcolaCoordinata(int x)
 {
 	//return ((x - dimensioneCasella/2)/dimensioneCasella) + 1;
@@ -106,14 +117,20 @@ void Quadrante::creaCaselleTo(int x, int y)
 	if(griglia.size() == 0)
 		creaRiga(x);
 	else if(i > griglia.size()-1)
-		creaRiga(x);
+	{
+		while((i > griglia.size()-1))
+		{
+			creaRiga(x);
+		}
+	}
+
 		
 	int length = griglia.at(i).size();
 
 	while(j > length-1)
 	{
 		
-		griglia.at(i).push_back(Casella(dimensioneCasella/2, calcolaPosizione(length), dimensioneCasella, numeroQuadrante));
+		griglia.at(i).push_back(Casella(calcolaPosizione(i), calcolaPosizione(length), dimensioneCasella, numeroQuadrante));
 		griglia.at(i).at(length).setExist(false);
 		length = griglia.at(i).size();
 	}

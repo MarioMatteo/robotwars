@@ -1,3 +1,5 @@
+#ifndef QUADRANTE_H_
+#define QUADRANTE_H_
 #include <iostream>
 #include <vector>
 #include <string>
@@ -14,13 +16,16 @@ class Quadrante
 		int calcolaCoordinata(int x);
 		int calcolaPosizione(int i);
 		int numeroQuadrante;
+		void creaCasella(int x, int y);
 
 	public:
+		Quadrante(int _dimensioneCasella, int _quadrante);
+		~Quadrante();
 		void pulisciCasella(int x, int y);
 		void sporcaCasella(int x, int y);
 		void occupaCasella(int x, int y);
 		void liberaCasella(int x, int y);
-		void creaCasella(int x, int y);
+
 		void creaRiga(int y);
 		void creaCaselleTo(int x, int y);
 		bool exist(int x, int y);
@@ -28,19 +33,6 @@ class Quadrante
 		void toString();
 
 		
-	Quadrante(int _dimensioneCasella, int _quadrante)
-	{
-		dimensioneCasella = _dimensioneCasella;
-		numeroQuadrante = _quadrante;
-	}
-		
-	Quadrante()
-	{
-		
-	}
 	
-	~Quadrante()
-	{
-		
-	}
 };
+#endif

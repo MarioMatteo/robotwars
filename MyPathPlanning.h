@@ -7,7 +7,10 @@
 
 #ifndef MYPATHPLANNING_H_
 #define MYPATHPLANNING_H_
-
+#include "Mappa.h"
+#include "Casella.h"
+#include "Aria.h"
+#include <math.h>
 
 class MyPathPlanning {
 private:
@@ -22,7 +25,7 @@ private:
 	void getXY(int* x, int* y);
 	int approssimation2(double angle);
 public:
-	MyPathPlanning(int unit, Mappa mappa, ArRobot robot)
+	MyPathPlanning(int unit, Mappa mappa, ArRobot robot);
 
 	virtual ~MyPathPlanning();
 	void percorri();

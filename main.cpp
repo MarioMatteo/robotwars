@@ -1,7 +1,7 @@
 #include <iostream>
-#include "PathPlanning.h"
+#include "MyPathPlanning.h"
 #include "Mappa.h"
-
+#include "Aria.h"
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 int main(int argc, char** argv) 
@@ -71,7 +71,10 @@ int main(int argc, char** argv)
 	*/
 
 	 // Test funzioni mappa
+
 	Mappa* mappa = new Mappa(250);
+
+
 	mappa->creaCasella(1000,500);
 	mappa->occupaCasella(1000,500);
 	mappa->creaCasella(-800,600);

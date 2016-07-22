@@ -5,16 +5,14 @@
  *      Author: gabrielefcg
  */
 #include "MyPathPlanning.h"
-#include "Mappa.h"
-#include "Casella.h"
-#include <math.h>
+
 
 
 
 MyPathPlanning::MyPathPlanning(int unit, Mappa mappa, ArRobot robot) {
 	// TODO Auto-generated constructor stub
 	this->unit=unit;
-	this->mappa=mappa;
+	this->mappa=&mappa;
 	this->robot=robot;
 
 
