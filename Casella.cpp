@@ -1,0 +1,123 @@
+
+#include "Casella.h"
+//distruttore
+	Casella::~Casella()
+	{
+
+	}
+	//costruttore
+	Casella::Casella(int _x, int _y, int _dimensione, int _quadrante)
+	{
+		this->ostacolo = false;
+		this->sporco = true;
+
+
+		this->x = abs(_x);
+		this->y = abs(_y);
+
+		this->dimensione = _dimensione;
+		this->quadrante = _quadrante;
+		this->exist=false;
+	}
+/*
+	Casella::Casella(int _x, int _y, int _dimensione,int _quadrante, bool _exist)
+	{
+		this->ostacolo = false;
+		this->sporco = false;
+		this->exist = _exist;
+
+		this->x = abs(_x);
+		this->y = abs(_y);
+
+		this->dimensione = _dimensione;
+		this->quadrante = _quadrante;
+	}
+
+*/
+
+
+	//GETTER
+
+	bool Casella::isOstacolo()
+	{
+		return ostacolo;
+	}
+
+	bool Casella::isSporco()
+	{
+		return sporco;
+	}
+
+	int Casella::getX()
+	{
+	/*	if(quadrante == 1)
+			return y;
+		else if(quadrante == 2)
+			return x;
+		else if(quadrante == 3)
+			return -y;
+		else if(quadrante == 4)
+			return -x;
+		
+		return -1;*/
+		return x;
+	}
+
+	int Casella::getY()
+	{	
+		if(quadrante == 1)
+			return x;
+		else if(quadrante == 2)
+			return y;
+		else if(quadrante == 3)
+			return -x;
+		else if(quadrante == 4)
+			return -y;
+		
+		return -1;
+	}
+	
+	int Casella::getQuadrante()
+	{
+		return quadrante;
+	}
+	
+	
+	bool Casella::isExist()
+	{
+		return exist;
+	}
+
+	//SETTER
+
+	void Casella::setOstacolo(bool _ostacolo)
+	{
+		ostacolo = _ostacolo;
+	}
+
+	void Casella::setSporco(bool _sporco)
+	{
+		sporco = _sporco;
+	}
+	
+	void Casella::setExist(bool _exist)
+	{
+		exist = _exist;
+	}
+
+	//metodo che calcola se un punto è all'interno della casella considerata
+	bool Casella::isInside(int _x, int _y)
+	{
+		bool risultato = false;
+
+		if(_x < (x + dimensione/2) &&  _x > (x - dimensione/2))
+		{
+			if(_y < (y + dimensione/2) &&  _y > (y - dimensione/2))
+			{
+				risultato = true;
+			}
+		}
+
+		return risultato;
+	}
+
