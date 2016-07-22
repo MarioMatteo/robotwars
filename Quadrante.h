@@ -29,7 +29,7 @@ class Quadrante
 		void creaRiga(int y);
 		void creaCaselleTo(int x, int y);
 		bool exist(int x, int y);
-		Casella getCasella(int x, int y);
+		Casella* getCasella(int x, int y);
 		void toString();
 
 		

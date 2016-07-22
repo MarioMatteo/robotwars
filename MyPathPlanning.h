@@ -25,7 +25,7 @@ private:
 	void getXY(int* x, int* y);
 	int approssimation2(double angle);
 public:
-	MyPathPlanning(int unit, Mappa mappa, ArRobot robot);
+	MyPathPlanning(int unit, Mappa* mappa, ArRobot* robot);
 
 	virtual ~MyPathPlanning();
 	void percorri();

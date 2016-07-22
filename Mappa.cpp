@@ -91,7 +91,7 @@ void Mappa::liberaCasella(int x, int y)
 	quadranti[i].liberaCasella(coordinate[0], coordinate[1]);
 }
 
-Casella Mappa::getCasella(int x, int y)
+Casella* Mappa::getCasella(int x, int y)
 {
 	int i = checkQuadrante(x,y)-1;
 	int coordinate[2];

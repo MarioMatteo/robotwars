@@ -7,7 +7,7 @@
 
 #ifndef SENSORREADINGBOX_H_
 #define SENSORREADINGBOX_H_
-
+#include "Aria.h"
 class SensorReadingBox {
 private:
 	int num_cell;

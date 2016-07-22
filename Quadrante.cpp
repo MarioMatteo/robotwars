@@ -138,11 +138,11 @@ void Quadrante::creaCaselleTo(int x, int y)
 	creaCasella(x,y);
 }
 
-Casella Quadrante::getCasella(int x, int y)
+Casella* Quadrante::getCasella(int x, int y)
 {
 	int i = calcolaCoordinata(x);
 	int j = calcolaCoordinata(y);
-	griglia.at(i).at(j);
+	return griglia.at(i).at(j);
 }
 
 

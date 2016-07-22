@@ -16,8 +16,7 @@ class Mappa
 		
 	public:
 		Mappa(int dimensioneCasella);
-
-				~Mappa();
+		~Mappa();
 		int checkQuadrante(int x, int y);
 		Quadrante getQuadrante(int i);	
 		void creaCasella(int x, int y);
@@ -25,7 +24,7 @@ class Mappa
 		void sporcaCasella(int x, int y);
 		void occupaCasella(int x, int y);
 		void liberaCasella(int x, int y); 
-		Casella getCasella(int x, int y);
+		Casella* getCasella(int x, int y);
 		void toString();
 
 	

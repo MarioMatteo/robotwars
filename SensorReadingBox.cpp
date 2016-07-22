@@ -21,15 +21,15 @@ SensorReadingBox::~SensorReadingBox() {
 
 void SensorReadingBox::readSensor()
 {
-	robot.lock();
+	robot->lock();
 	laser->lockDevice();
 
-	ArPose current_position= robot.getPose();
-	ArPose obstacle = new ArPose();
+	ArPose* current_position= robot->getPose();
+	ArPose* obstacle = new ArPose();
 	int x_robot,y_robot, direction_robot;
-	x_robot=current_position.getX();
-	y_robot=current_position.getY();
-	direction_robot=current_position.getTh();
+	x_robot=current_position->getX();
+	y_robot=current_position->getY();
+	direction_robot=current_position->getTh();
 
 	int y_temp = 0;
 	int x_temp = 0;
@@ -45,7 +45,7 @@ void SensorReadingBox::readSensor()
 					for(int col=-row;col<=row;col++)
 					{
 						x_temp = x_robot + unit*col;
-						double distance = robot.checkRangeDevicesCurrentBox((double) x_temp-unit/2,(double) y_temp-unit/2, (double) x_temp+unit/2, (double) y_temp+unit/2, obstacle, laser);
+						double distance = robot->checkRangeDevicesCurrentBox((double) x_temp-unit/2,(double) y_temp-unit/2, (double) x_temp+unit/2, (double) y_temp+unit/2, obstacle, laser,true);
 						mappa->creaCasella(x_temp,y_robot);
 						if(distance>=0)
 						{
@@ -64,7 +64,7 @@ void SensorReadingBox::readSensor()
 						x_temp = x_robot + unit*col;
 						if(x_robot!=x_temp||y_robot!=y_temp)
 						{
-							double distance = robot.checkRangeDevicesCurrentBox((double) x_temp-unit/2,(double) y_temp-unit/2, (double) x_temp+unit/2, (double) y_temp+unit/2, obstacle, laser);
+							double distance = robot->checkRangeDevicesCurrentBox((double) x_temp-unit/2,(double) y_temp-unit/2, (double) x_temp+unit/2, (double) y_temp+unit/2, obstacle, laser);
 							mappa->creaCasella(x_temp,y_robot);
 							if(distance>=0)
 							{
@@ -84,7 +84,7 @@ void SensorReadingBox::readSensor()
 						x_temp = x_robot + unit*col;
 						if(x_robot!=x_temp||y_robot!=y_temp)
 						{
-							double distance = robot.checkRangeDevicesCurrentBox((double) x_temp-unit/2,(double) y_temp-unit/2, (double) x_temp+unit/2, (double) y_temp+unit/2, obstacle, laser);
+							double distance = robot->checkRangeDevicesCurrentBox((double) x_temp-unit/2,(double) y_temp-unit/2, (double) x_temp+unit/2, (double) y_temp+unit/2, obstacle, laser);
 							mappa->creaCasella(x_temp,y_robot);
 							if(distance>=0)
 							{
@@ -102,7 +102,7 @@ void SensorReadingBox::readSensor()
 					for(int row=-col;row<=col;row++)
 					{
 						y_temp = y_robot + unit*row;
-						double distance = robot.checkRangeDevicesCurrentBox((double) x_temp-unit/2,(double) y_temp-unit/2, (double) x_temp+unit/2, (double) y_temp+unit/2, obstacle, laser);
+						double distance = robot->checkRangeDevicesCurrentBox((double) x_temp-unit/2,(double) y_temp-unit/2, (double) x_temp+unit/2, (double) y_temp+unit/2, obstacle, laser);
 						mappa->creaCasella(x_temp,y_robot);
 						if(distance>=0)
 						{
@@ -119,7 +119,7 @@ void SensorReadingBox::readSensor()
 					for(int row=-col;row<=col;row++)
 					{
 						y_temp = y_robot + unit*row;
-						double distance = robot.checkRangeDevicesCurrentBox((double) x_temp-unit/2,(double) y_temp-unit/2, (double) x_temp+unit/2, (double) y_temp+unit/2, obstacle, laser);
+						double distance = robot->checkRangeDevicesCurrentBox((double) x_temp-unit/2,(double) y_temp-unit/2, (double) x_temp+unit/2, (double) y_temp+unit/2, obstacle, laser);
 						mappa->creaCasella(x_temp,y_robot);
 						if(distance>=0)
 						{
@@ -138,7 +138,7 @@ void SensorReadingBox::readSensor()
 						x_temp = x_robot + unit*col;
 						if(x_robot!=x_temp||y_robot!=y_temp)
 						{
-							double distance = robot.checkRangeDevicesCurrentBox((double) x_temp-unit/2,(double) y_temp-unit/2, (double) x_temp+unit/2, (double) y_temp+unit/2, obstacle, laser);
+							double distance = robot->checkRangeDevicesCurrentBox((double) x_temp-unit/2,(double) y_temp-unit/2, (double) x_temp+unit/2, (double) y_temp+unit/2, obstacle, laser);
 							mappa->creaCasella(x_temp,y_robot);
 							if(distance>=0)
 							{
@@ -158,7 +158,7 @@ void SensorReadingBox::readSensor()
 						x_temp = x_robot + unit*col;
 						if(x_robot!=x_temp||y_robot!=y_temp)
 						{
-							double distance = robot.checkRangeDevicesCurrentBox((double) x_temp-unit/2,(double) y_temp-unit/2, (double) x_temp+unit/2, (double) y_temp+unit/2, obstacle, laser);
+							double distance = robot->checkRangeDevicesCurrentBox((double) x_temp-unit/2,(double) y_temp-unit/2, (double) x_temp+unit/2, (double) y_temp+unit/2, obstacle, laser);
 							mappa->creaCasella(x_temp,y_robot);
 							if(distance>=0)
 							{
@@ -175,7 +175,7 @@ void SensorReadingBox::readSensor()
 					for(int col=-row;col<=row;col++)
 					{
 						x_temp = x_robot + unit*col;
-						double distance = robot.checkRangeDevicesCurrentBox((double) x_temp-unit/2,(double) y_temp-unit/2, (double) x_temp+unit/2, (double) y_temp+unit/2, obstacle, laser);
+						double distance = robot->checkRangeDevicesCurrentBox((double) x_temp-unit/2,(double) y_temp-unit/2, (double) x_temp+unit/2, (double) y_temp+unit/2, obstacle, laser);
 						mappa->creaCasella(x_temp,y_robot);
 						if(distance>=0)
 						{
@@ -191,7 +191,7 @@ void SensorReadingBox::readSensor()
 
 	laser->unlockDevice();
 
-	robot.unlock();
+	robot->unlock();
 }
 //Approssima l'angolo di orientamento del robot con gli angoli delle nostre 8 possibili direzioni
 int SensorReadingBox::approssimation(double angle)

@@ -9,10 +9,10 @@
 
 
 
-MyPathPlanning::MyPathPlanning(int unit, Mappa mappa, ArRobot robot) {
+MyPathPlanning::MyPathPlanning(int unit, Mappa* mappa, ArRobot* robot) {
 	// TODO Auto-generated constructor stub
 	this->unit=unit;
-	this->mappa=&mappa;
+	this->mappa=mappa;
 	this->robot=robot;
 
 
@@ -29,27 +29,27 @@ void MyPathPlanning::percorri()
 {
 	int duration =3000;
   // Collision avoidance actions at higher priority
-  ArActionStallRecover recoverAct;
-  ArActionBumpers bumpAct;
+  ArActionStallRecover recover;
+  ArActionBumpers bumpers;
   ArActionLimiterForwards limiterAction("speed limiter far", unit/2, unit*2, 400);
   ArActionAvoidFront avoidFrontNear("Avoid Front Near", unit/2, 400, 45);
 
 
-   robot.addAction(&recover, 100);
-  robot.addAction(&bumpers, 75);
-  robot.addAction(&avoidFrontNear, 50);
-robot.addAction(&limiterAction, 90);
+   robot->addAction(&recover, 100);
+  robot->addAction(&bumpers, 75);
+  robot->addAction(&avoidFrontNear, 50);
+robot->addAction(&limiterAction, 90);
   ArActionGoto gotoPoseAction("goto");
-  robot.addAction(&gotoPoseAction, 50);
+  robot->addAction(&gotoPoseAction, 50);
 
   // Stop action at lower priority, so the robot stops if it has no goal
   ArActionStop stopAction("stop");
-  robot.addAction(&stopAction, 40);
+  robot->addAction(&stopAction, 40);
 
 
   // turn on the motors, turn off amigobot sounds
-  robot.enableMotors();
-  robot.comInt(ArCommands::SOUNDTOG, 0);
+  robot->enableMotors();
+  robot->comInt(ArCommands::SOUNDTOG, 0);
 
 
 
@@ -103,14 +103,14 @@ robot.addAction(&limiterAction, 90);
         y[i]=y[i]-unit;
       }
     }
-    ArPose current_position=robot.getPose();
+    ArPose current_position=robot->getPose();
     direction=this->approssimation2(current_position.getTh());
     int futura_direzione=this->sceltaEuristica(x,y,direction);
 
     if(futura_direzione==-1)
     {
     	gotoPoseAction.cancelGoal();
-		robot.unlock();
+		robot->unlock();
 		ArUtil::sleep(3000);
 		break;
     }
@@ -123,7 +123,7 @@ robot.addAction(&limiterAction, 90);
 
 
 
-      gotoPoseAction.getY.setGoal(ArPose(future_x, future_y));
+      gotoPoseAction.setGoal(ArPose(future_x, future_y));
 
       ArLog::log(ArLog::Normal, "Going to next goal at %.0f %.0f",
             gotoPoseAction.getGoal().getX(), gotoPoseAction.getGoal().getY());
@@ -132,12 +132,12 @@ robot.addAction(&limiterAction, 90);
     if(start.mSecSince() >= duration) {
       ArLog::log(ArLog::Normal, "%d seconds have elapsed. Cancelling current goal, waiting 3 seconds, and exiting.", duration/1000);
       gotoPoseAction.cancelGoal();
-      robot.unlock();
+      robot->unlock();
       ArUtil::sleep(3000);
       break;
     }
 
-    robot.unlock();
+    robot->unlock();
     ArUtil::sleep(100);
   }
 
@@ -238,9 +238,9 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
     		  double angolo1=this->fromDirectionToAngle(direzione1);
     		  double angolo2=this->fromDirectionToAngle(direzione2);
 
-    		  Casella casella=mappa->getCasella(row,col);
-    		  int x_casella=casella.getX();
-    		  int y_casella=casella.getY();
+    		  Casella* casella=mappa->getCasella(row,col);
+    		  int x_casella=casella->getX();
+    		  int y_casella=casella->getY();
 
     		  int x_robot;
 			  int y_robot;
@@ -285,7 +285,7 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
   }
 void MyPathPlanning::getXY(int* x, int* y)
 {
-	 ArPose current_position= robot.getPose();
+	 ArPose current_position= robot->getPose();
 	 *x=current_position.getX();
 	 *y=current_position.getY();
 }
