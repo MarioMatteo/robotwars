@@ -7,9 +7,8 @@
 
 #include "SensorReadingBox.h"
 
-SensorReadingBox::SensorReadingBox(Mappa* mappa, ArLaser* laser,ArRobot* robot,  int unit, int num_cell) {
+SensorReadingBox::SensorReadingBox(Mappa* mappa, ArRobot* robot,  int unit, int num_cell) {
 	this->mappa=mappa;
-	this->laser=laser;
 	this->unit=unit;
 	this->num_cell=num_cell;
 	this->robot=robot;

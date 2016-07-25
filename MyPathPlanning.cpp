@@ -27,6 +27,7 @@ MyPathPlanning::~MyPathPlanning() {
 
 void MyPathPlanning::percorri()
 {
+	SensorReadingBox* sensor = new SensorReadingBox(mappa, robot,unit, num_cell);
 	int duration =3000;
   // Collision avoidance actions at higher priority
   ArActionStallRecover recover;
@@ -60,12 +61,16 @@ robot->addAction(&limiterAction, 90);
   start.setToNow();
   int previus_x=-1;
   int previus_y=-1;
+  mappa->creaCasella(0,0);
+  cout<<"\n inizio ciclo"<<endl;
   while (Aria::getRunning())
   {
+	  robot->lock();
      int current_x;
      int current_y;
 
      this->getXY(&current_x,&current_y);
+     sensor->readSensor();
      mappa->pulisciCasella(current_x,current_y);
 
      if(current_x!=previus_x||current_y!=previus_y)
@@ -105,6 +110,7 @@ robot->addAction(&limiterAction, 90);
     }
     ArPose current_position=robot->getPose();
     direction=this->approssimation2(current_position.getTh());
+    cout<<"prima di scelta euristica"<<endl;
     int futura_direzione=this->sceltaEuristica(x,y,direction);
 
     if(futura_direzione==-1)
@@ -138,8 +144,10 @@ robot->addAction(&limiterAction, 90);
     }
 
     robot->unlock();
+    cout<<"fine ciclo"<<endl;
     ArUtil::sleep(100);
   }
+  cout<<"uscita dal ciclo"<<endl;
 
   // Robot disconnected or time elapsed, shut down
   Aria::exit(0);

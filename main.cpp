@@ -2,17 +2,18 @@
 #include "MyPathPlanning.h"
 #include "Mappa.h"
 #include "Aria.h"
+#include "Arnl.h"
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 int main(int argc, char** argv) 
-{/*
+{
 
 	int unit=500;
 	ArRobot robot;
-	ArLaser laser;
+
 
 	 Aria::init();
-	  ArRobot robot;
+
 	  ArArgumentParser parser(&argc, argv);
 	  parser.loadDefaultArguments();
 
@@ -65,13 +66,14 @@ int main(int argc, char** argv)
 	  ArLog::log(ArLog::Normal, "Connected to all lasers.");
 
 	Mappa* mappa = new Mappa(unit);
-	PathPlanning* path_planning= new PathPlanning(unit,robot, mappa);
+	MyPathPlanning* path_planning= new MyPathPlanning(unit,mappa, &robot);
 
+	//cout<<"prova 1"<<endl;
 	path_planning->percorri();
-	*/
+
 
 	 // Test funzioni mappa
-
+/*
 	Mappa* mappa = new Mappa(250);
 
 
@@ -89,5 +91,5 @@ int main(int argc, char** argv)
 	mappa->occupaCasella(-550,340);
 	mappa->toString();
 	return 0;
-
+*/
 }
