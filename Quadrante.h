@@ -19,6 +19,7 @@ class Quadrante
 		void creaCasella(int x, int y);
 
 	public:
+		void getTutteCaselleQuadrante(std::vector<Casella>*  lista);
 		Quadrante(int _dimensioneCasella, int _quadrante);
 		~Quadrante();
 		void pulisciCasella(int x, int y);

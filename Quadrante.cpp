@@ -142,9 +142,19 @@ Casella* Quadrante::getCasella(int x, int y)
 {
 	int i = calcolaCoordinata(x);
 	int j = calcolaCoordinata(y);
-	return griglia.at(i).at(j);
+	return &griglia.at(i).at(j);
 }
 
+void Quadrante::getTutteCaselleQuadrante(std::vector<Casella>*  lista)
+{
+	for (int i = 0; i < griglia.size(); i++)
+	{
+		for(int j = 0; j < griglia.at(i).size(); j++)
+		{
+			lista->push_back(griglia.at(i).at(j));
+		}
+	}
+}
 
 void Quadrante::toString()
 {

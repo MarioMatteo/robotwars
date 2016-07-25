@@ -29,6 +29,15 @@ int Mappa::checkQuadrante(int x, int y)
 	return quadrante;
 }
 
+void Mappa::getTutteCaselle(std::vector<Casella>* lista)
+{
+	for(int i = 0; i < 4; i++)
+	{
+		quadranti[i].getTutteCaselleQuadrante( lista);
+	}
+}
+
+
 Quadrante Mappa::getQuadrante(int i)
 {
 	return quadranti[i];

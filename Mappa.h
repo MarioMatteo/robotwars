@@ -15,6 +15,7 @@ class Mappa
 		void pulisciCoordinate(int x, int y, int coordinate[]);
 		
 	public:
+		void getTutteCaselle(std::vector<Casella>* lista);
 		Mappa(int dimensioneCasella);
 		~Mappa();
 		int checkQuadrante(int x, int y);

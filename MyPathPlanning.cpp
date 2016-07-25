@@ -150,17 +150,18 @@ robot->addAction(&limiterAction, 90);
 int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
 {
 	bool all_cleaned=true;
-	for(int row=0;row<mappa->numRow();row++)
+	std::vector<Casella>  lista;
+	mappa->getTutteCaselle(&lista);
+	for(int i=0;i<lista.size();i++)
 	  {
-		int numCol=mappa->getRow(row).size();
-		for(int col=0;col<numCol;col++)//spazzolo tutta la mappa salvando le due medie
-		{
-			Casella* da_controllare=mappa->getCasella(row,col);
-			if(da_controllare->isSporco()==true)
+		//spazzolo tutta la mappa salvando le due medie
+
+			Casella da_controllare=lista[i];
+			if(da_controllare.isSporco()==true)
 			{
 				all_cleaned=false;
 			}
-		}
+
 	  }
 	if(all_cleaned)
 	{
@@ -227,31 +228,34 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
 	  double sommatoria_settore2=0;
 	  double sommatoria_settore1_sporco=0;
 	  double sommatoria_settore2_sporco=0;
-    for(int row=0;row<this->mappa->numRow();row++)
-    {
-    	int numCol=mappa->getRow(row).size();
-      for(int col=0;col<numCol;col++)//spazzolo tutta la mappa salvando le due medie
-      {
-    	  Casella* da_controllare=mappa->getCasella(row,col);
-    	  if(da_controllare->isExist()==true)
+
+	  std::vector<Casella> lista;
+
+	  mappa->getTutteCaselle(&lista);
+	  	for(int i=0;i<lista.size();i++)
+	  	  {
+	  		//spazzolo tutta la mappa salvando le due medie
+
+	  			Casella da_controllare=lista[i];
+    	  if(da_controllare.isExist()==true)
     	  {
     		  double angolo1=this->fromDirectionToAngle(direzione1);
     		  double angolo2=this->fromDirectionToAngle(direzione2);
 
-    		  Casella* casella=mappa->getCasella(row,col);
-    		  int x_casella=casella->getX();
-    		  int y_casella=casella->getY();
+
+    		  int x_casella=da_controllare.getX();
+    		  int y_casella=da_controllare.getY();
 
     		  int x_robot;
 			  int y_robot;
 			  this->getXY(&x_robot,&y_robot);
 
-    		  double angolo_casella=this->fromCartToPolar(x_robot,y_robot,x_casella,y_casella);
+    		  double angolo_casella=fromCartToPolar(x_robot,y_robot,x_casella,y_casella);
 
     		  if((angolo1+22.5)<=angolo_casella&&(angolo1-22.5)>=angolo_casella)
     		  {
     			  sommatoria_settore1++;
-    			  if(da_controllare->isSporco()==true)
+    			  if(da_controllare.isSporco()==true)
     			  {
     				  sommatoria_settore1_sporco++;
     			  }
@@ -261,7 +265,7 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
     		  if((angolo2+22.5)<=angolo_casella&&(angolo2-22.5)>=angolo_casella)
     		  {
     			  sommatoria_settore2++;
-    			  if(da_controllare->isSporco()==true)
+    			  if(da_controllare.isSporco()==true)
     			  {
     				  sommatoria_settore2_sporco++;
     			  }
@@ -269,7 +273,7 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
 
 
     	  }
-      }
+
     }
     double media1=sommatoria_settore1_sporco/sommatoria_settore1;
     double media2=sommatoria_settore2_sporco/sommatoria_settore2;
@@ -304,7 +308,7 @@ void MyPathPlanning::getXY(int* x, int* y)
 
   }
 
-  double fromCartToPolar(int origin_x, int origin_y, int x, int y)
+  double MyPathPlanning::fromCartToPolar(int origin_x, int origin_y, int x, int y)
   {
 	  return atan((double)(origin_x+x)/(double)(origin_y+y));
   }

@@ -24,6 +24,7 @@ private:
 	double MediaSettore(int direzione, Casella casella);
 	void getXY(int* x, int* y);
 	int approssimation2(double angle);
+
 public:
 	MyPathPlanning(int unit, Mappa* mappa, ArRobot* robot);
 
