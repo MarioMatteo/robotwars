@@ -112,6 +112,7 @@ robot->addAction(&limiterAction, 90);
     direction=this->approssimation2(current_position.getTh());
     cout<<"prima di scelta euristica"<<endl;
     int futura_direzione=this->sceltaEuristica(x,y,direction);
+    cout<<"prima di scelta euristica"<<endl;
 
     if(futura_direzione==-1)
     {
@@ -182,7 +183,9 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
   {
     int euristica;
     int direzione_analizzata=(direzione+i)%8;
+    cout<<"casella da valutare "<<x[i]<<" , "<<y[i]<<endl;
     Casella* casella=mappa->getCasella(x[i],y[i]);
+    cout<<"ho ricevuto la casella"<<endl;
 
     if(casella->isOstacolo()==false&& casella->isExist())
     {

@@ -142,7 +142,7 @@ Casella* Quadrante::getCasella(int x, int y)
 {
 	int i = calcolaCoordinata(x);
 	int j = calcolaCoordinata(y);
-	if(i>griglia.size() || j>griglia.at(i).size())
+	if(i>=griglia.size() || j>=griglia.at(i).size())
 	{
 		Casella* casella_non_esistente = new Casella(x,y, dimensioneCasella, 0);
 		return casella_non_esistente;

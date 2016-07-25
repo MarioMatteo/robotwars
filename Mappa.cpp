@@ -64,8 +64,9 @@ void Mappa::creaCasella(int x, int y)
 {
 	int i = checkQuadrante(x,y)-1;
 	int coordinate[2];
-	pulisciCoordinate(x,y, coordinate);
 	quadranti[i].creaCaselleTo(coordinate[0], coordinate[1]);
+	pulisciCoordinate(x,y, coordinate);
+
 	cout<<"Creata casella "<<x<<" , "<<y<<endl;
 }
 
@@ -105,7 +106,9 @@ Casella* Mappa::getCasella(int x, int y)
 {
 	int i = checkQuadrante(x,y)-1;
 	int coordinate[2];
+
 	pulisciCoordinate(x,y, coordinate);
+
 	return quadranti[i].getCasella(coordinate[0], coordinate[1]);
 }
 
