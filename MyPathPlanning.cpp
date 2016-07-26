@@ -14,7 +14,7 @@ MyPathPlanning::MyPathPlanning(int unit, Mappa* mappa, ArRobot* robot) {
 	this->unit=unit;
 	this->mappa=mappa;
 	this->robot=robot;
-	this->num_cell = 3;
+	this->num_cell = 1;
 	this->duration = 3000;
 
 
@@ -153,7 +153,7 @@ robot->addAction(&limiterAction, 90);
     robot->unlock();
 
     cout<<"fine ciclo"<<endl;
-    ArUtil::sleep(500);
+    ArUtil::sleep(3000);
   }
   cout<<"uscita dal ciclo"<<endl;
 
@@ -295,7 +295,7 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
     }
     double media1=sommatoria_settore1_sporco/sommatoria_settore1;
     double media2=sommatoria_settore2_sporco/sommatoria_settore2;
-    if(media1>media2&&media2>0)
+    if(media1>=media2&&media2>0)
     {
     	return direzione2;
     }

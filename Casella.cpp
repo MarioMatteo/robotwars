@@ -50,36 +50,35 @@
 
 	int Casella::getX()
 	{
-	/*	if(quadrante == 1)
-			return y;
-		else if(quadrante == 2)
+		if(quadrante == 0)
 			return x;
-		else if(quadrante == 3)
+		else if(quadrante == 1)
 			return -y;
-		else if(quadrante == 4)
+		else if(quadrante == 2)
 			return -x;
+		else if(quadrante == 3)
+			return y;
 		
-		return -1;*/
-		return x;
+		return -1;
 	}
 
 	int Casella::getY()
 	{	
-		if(quadrante == 1)
+		if(quadrante == 0)
+			return y;
+		else if(quadrante == 1)
 			return x;
 		else if(quadrante == 2)
-			return y;
+			return -y;
 		else if(quadrante == 3)
 			return -x;
-		else if(quadrante == 4)
-			return -y;
 		
 		return -1;
 	}
 	
 	int Casella::getQuadrante()
 	{
-		return quadrante;
+		return quadrante+1;
 	}
 	
 	

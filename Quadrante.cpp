@@ -130,7 +130,7 @@ void Quadrante::creaCaselleTo(int x, int y)
 	while(j > length-1)
 	{
 		
-		griglia.at(i).push_back(Casella(calcolaPosizione(i), calcolaPosizione(length), dimensioneCasella, numeroQuadrante));
+		griglia.at(i).push_back(Casella(calcolaPosizione(length), calcolaPosizione(i),  dimensioneCasella, numeroQuadrante));
 		griglia.at(i).at(length).setExist(false);
 		length = griglia.at(i).size();
 	}
