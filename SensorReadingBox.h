@@ -11,6 +11,7 @@
 #include "Aria.h"
 #include "Mappa.h"
 #include "Arnl.h"
+#include "MyUtil.h"
 
 class SensorReadingBox {
 private:

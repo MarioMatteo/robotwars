@@ -1,0 +1,246 @@
+Connecting to simulator through tcp.
+
+Syncing 0
+Syncing 1
+Syncing 2
+Connected to robot.
+Name: MobileSim
+Type: Pioneer
+Subtype: p3dx-sh-lms1xx
+ArConfig: Config version: 2.0
+Loaded robot parameters from /usr/local/Aria/params/p3dx-sh-lms1xx.p
+ArRobotConnector: Connected to simulator, not connecting to additional hardware components.
+Using new style simulated laser for lms1xx_1
+sim_lms1xx_1::setConnectionTimeoutSeconds: Setting timeout to 8 secs
+lasersExample: Connected to robot.
+sim_lms1xx_1: Connected to simulated laser.
+Connected to all lasers.
+
+ inizio ciclo
+direzione del robot non approssimata0
+direzione del robot0
+Going to next goal at 0 500
+fine ciclo
+direzione del robot non approssimata2.98053
+direzione del robot0
+Going to next goal at 0 500
+fine ciclo
+direzione del robot non approssimata5.96105
+direzione del robot0
+Going to next goal at 0 500
+fine ciclo
+direzione del robot non approssimata8.94158
+direzione del robot0
+Going to next goal at 0 500
+fine ciclo
+direzione del robot non approssimata22.8799
+direzione del robot1
+Going to next goal at 500 500
+fine ciclo
+direzione del robot non approssimata42.867
+direzione del robot1
+Going to next goal at 500 500
+fine ciclo
+direzione del robot non approssimata47.8637
+direzione del robot1
+Going to next goal at 500 500
+fine ciclo
+direzione del robot non approssimata47.8637
+direzione del robot1
+Going to next goal at 0 500
+fine ciclo
+direzione del robot non approssimata53.8248
+direzione del robot1
+Going to next goal at 0 500
+fine ciclo
+direzione del robot non approssimata94.6755
+direzione del robot2
+Going to next goal at 0 1000
+fine ciclo
+direzione del robot non approssimata135.614
+direzione del robot3
+Going to next goal at 1000 500
+fine ciclo
+direzione del robot non approssimata164.543
+direzione del robot4
+Going to next goal at 500 500
+fine ciclo
+direzione del robot non approssimata-146.572
+direzione del robot5
+Going to next goal at -500 500
+fine ciclo
+direzione del robot non approssimata-132.633
+direzione del robot5
+Going to next goal at -500 500
+fine ciclo
+direzione del robot non approssimata-137.63
+direzione del robot5
+Going to next goal at -500 500
+fine ciclo
+direzione del robot non approssimata-137.63
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-136.578
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-137.63
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-137.63
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-137.63
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-138.594
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-139.559
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-139.559
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-140.611
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-141.575
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-142.627
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-144.556
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-143.591
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-144.556
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-144.556
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-145.607
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-146.572
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-146.572
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-148.588
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-150.604
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-151.569
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-150.604
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-151.569
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-152.533
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-151.569
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-152.533
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-154.549
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-156.565
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-155.513
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-156.565
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-156.565
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-155.513
+direzione del robot5
+Going to next goal at 500 1000
+fine ciclo
+direzione del robot non approssimata-157.53
+direzione del robot4
+Going to next goal at 0 1000
+fine ciclo
+direzione del robot non approssimata-158.582
+direzione del robot4
+Going to next goal at 0 1000
+fine ciclo
+direzione del robot non approssimata-159.546
+direzione del robot4
+Going to next goal at 0 1000
+fine ciclo
+direzione del robot non approssimata-159.546
+direzione del robot4
+Going to next goal at 0 1000
+fine ciclo
+direzione del robot non approssimata-160.51
+direzione del robot4
+Going to next goal at 0 1000
+fine ciclo
+direzione del robot non approssimata-160.51
+direzione del robot4
+Going to next goal at 0 1000
+fine ciclo
+direzione del robot non approssimata-163.491
+direzione del robot4
+Going to next goal at 0 1000
+fine ciclo
+direzione del robot non approssimata-172.52
+direzione del robot4
+Going to next goal at 0 1000
+fine ciclo
+direzione del robot non approssimata175.5
+direzione del robot4
+Going to next goal at 0 1000
+fine ciclo
+Aria: Received signal 'SIGINT'. Exiting.
+Disconnecting from robot.
+uscita dal ciclo

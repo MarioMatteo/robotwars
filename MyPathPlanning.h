@@ -11,13 +11,16 @@
 #include "Casella.h"
 #include "Aria.h"
 #include "SensorReadingBox.h"
+#include "MyUtil.h"
 #include <math.h>
 
 class MyPathPlanning {
 private:
 	double fromDirectionToAngle(int direzione);
-	int num_cell=3;
-	int duration =3000;
+	//int num_cell = 3;
+	//int duration = 3000;
+	int num_cell;
+	int duration;
 	int unit;
 	Mappa* mappa;
 	ArRobot* robot;

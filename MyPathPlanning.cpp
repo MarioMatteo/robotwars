@@ -14,6 +14,8 @@ MyPathPlanning::MyPathPlanning(int unit, Mappa* mappa, ArRobot* robot) {
 	this->unit=unit;
 	this->mappa=mappa;
 	this->robot=robot;
+	this->num_cell = 3;
+	this->duration = 3000;
 
 
 }
@@ -28,7 +30,7 @@ MyPathPlanning::~MyPathPlanning() {
 void MyPathPlanning::percorri()
 {
 	SensorReadingBox* sensor = new SensorReadingBox(mappa, robot,unit, num_cell);
-	int duration =3000;
+	int duration =90000;
   // Collision avoidance actions at higher priority
   ArActionStallRecover recover;
   ArActionBumpers bumpers;
@@ -55,7 +57,7 @@ robot->addAction(&limiterAction, 90);
 
 
 
-  int goalNum = 0;
+  //int goalNum = 0;
   int direction=0;
   ArTime start;
   start.setToNow();
@@ -71,6 +73,8 @@ robot->addAction(&limiterAction, 90);
 
      this->getXY(&current_x,&current_y);
      sensor->readSensor();
+     current_x = MyUtil::centraCoordinate(current_x,unit);
+     current_y = MyUtil::centraCoordinate(current_y,unit);
      mappa->pulisciCasella(current_x,current_y);
 
      if(current_x!=previus_x||current_y!=previus_y)
@@ -110,9 +114,11 @@ robot->addAction(&limiterAction, 90);
     }
     ArPose current_position=robot->getPose();
     direction=this->approssimation2(current_position.getTh());
-    cout<<"prima di scelta euristica"<<endl;
+    cout<<"direzione del robot non approssimata"<<current_position.getTh()<<endl;
+    cout<<"direzione del robot"<<direction<<endl;
+    //cout<<"prima di scelta euristica"<<endl;
     int futura_direzione=this->sceltaEuristica(x,y,direction);
-    cout<<"prima di scelta euristica"<<endl;
+   // cout<<"prima di scelta euristica"<<endl;
 
     if(futura_direzione==-1)
     {
@@ -145,8 +151,9 @@ robot->addAction(&limiterAction, 90);
     }
 
     robot->unlock();
+
     cout<<"fine ciclo"<<endl;
-    ArUtil::sleep(100);
+    ArUtil::sleep(500);
   }
   cout<<"uscita dal ciclo"<<endl;
 
@@ -161,7 +168,7 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
 	bool all_cleaned=true;
 	std::vector<Casella>  lista;
 	mappa->getTutteCaselle(&lista);
-	for(int i=0;i<lista.size();i++)
+	for(int i=0;i<(int)lista.size();i++)
 	  {
 		//spazzolo tutta la mappa salvando le due medie
 
@@ -177,15 +184,15 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
 		return -1;
 	}
   int euristica_max=0;
-  int direzione_max=direzione;
+  //int direzione_max=direzione;
   //la direzione migliore è quella di andare avanti seguendo la propria direzione che all'inizio corrisponde alla direzione 0
   for(int i=0;i<8;i++)
   {
-    int euristica;
+    int euristica=0;
     int direzione_analizzata=(direzione+i)%8;
-    cout<<"casella da valutare "<<x[i]<<" , "<<y[i]<<endl;
+    //cout<<"casella da valutare "<<x[i]<<" , "<<y[i]<<endl;
     Casella* casella=mappa->getCasella(x[i],y[i]);
-    cout<<"ho ricevuto la casella"<<endl;
+    //cout<<"ho ricevuto la casella"<<endl;
 
     if(casella->isOstacolo()==false&& casella->isExist())
     {
@@ -243,7 +250,7 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
 	  std::vector<Casella> lista;
 
 	  mappa->getTutteCaselle(&lista);
-	  	for(int i=0;i<lista.size();i++)
+	  	for(int i=0;i<(int)lista.size();i++)
 	  	  {
 	  		//spazzolo tutta la mappa salvando le due medie
 
