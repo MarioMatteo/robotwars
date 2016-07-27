@@ -1,0 +1,8 @@
+1 Euristica (Risolto)
+2 Sensori devono vendere di più/ in modo diverso negli angoli ?
+3 Probabilmente se casella davanti è ostacolo il robot deve per forza andare indietro perchè può spostarsi in diagonale o di lato ?
+
+PROBLEMI
+
+1 Robot cerca di andare in caselle libere in cui non riesce ad andare
+2 Robot con spazio libero non va avanti ma gira su se stesso

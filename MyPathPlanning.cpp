@@ -114,8 +114,8 @@ robot->addAction(&limiterAction, 90);
     }
     ArPose current_position=robot->getPose();
     direction=this->approssimation2(current_position.getTh());
-    cout<<"direzione del robot non approssimata"<<current_position.getTh()<<endl;
-    cout<<"direzione del robot"<<direction<<endl;
+    //cout<<"direzione del robot non approssimata"<<current_position.getTh()<<endl;
+    //cout<<"direzione del robot"<<direction<<endl;
     //cout<<"prima di scelta euristica"<<endl;
     int futura_direzione=this->sceltaEuristica(x,y,direction);
    // cout<<"prima di scelta euristica"<<endl;
@@ -135,7 +135,10 @@ robot->addAction(&limiterAction, 90);
 
 
 
-
+   Casella* casella= mappa->getCasella(future_x,future_y);
+   cout<<"nuova casella"<<endl;
+   cout<<casella->isOstacolo()<<endl;
+   cout<<casella->isSporco()<<endl;
       gotoPoseAction.setGoal(ArPose(future_x, future_y));
 
       ArLog::log(ArLog::Normal, "Going to next goal at %.0f %.0f",
@@ -146,14 +149,14 @@ robot->addAction(&limiterAction, 90);
       ArLog::log(ArLog::Normal, "%d seconds have elapsed. Cancelling current goal, waiting 3 seconds, and exiting.", duration/1000);
       gotoPoseAction.cancelGoal();
       robot->unlock();
-      ArUtil::sleep(3000);
+      ArUtil::sleep(500);
       break;
     }
 
     robot->unlock();
 
     cout<<"fine ciclo"<<endl;
-    ArUtil::sleep(3000);
+    ArUtil::sleep(500);
   }
   cout<<"uscita dal ciclo"<<endl;
 
@@ -184,13 +187,15 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
 		return -1;
 	}
   int euristica_max=0;
-  //int direzione_max=direzione;
+  int indice_casella_max=0;
+  int direzione_max=direzione;
   //la direzione migliore è quella di andare avanti seguendo la propria direzione che all'inizio corrisponde alla direzione 0
   for(int i=0;i<8;i++)
   {
     int euristica=0;
     int direzione_analizzata=(direzione+i)%8;
-    //cout<<"casella da valutare "<<x[i]<<" , "<<y[i]<<endl;
+   // cout<<"casella da valutare "<<x[i]<<" , "<<y[i]<<endl;
+    //cout<<"direzione, direzione analizzata "<<direzione<<" , "<<direzione_analizzata<<endl;
     Casella* casella=mappa->getCasella(x[i],y[i]);
     //cout<<"ho ricevuto la casella"<<endl;
 
@@ -198,46 +203,60 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
     {
       euristica=euristica+12;
     }
+    if(casella->isExist()==false)
+	 {
+		 euristica=euristica+1;
+	 }
     if(casella->isSporco()==true && casella->isExist())
     {
 
       if(direzione_analizzata==direzione)
       {
-        euristica=euristica+5;
+        euristica=euristica+6;
       }
       if(direzione_analizzata==(direzione+1)%8||direzione_analizzata==(direzione+7)%8)
       {
-        euristica=euristica+4;
+        euristica=euristica+5;
       }
       if(direzione_analizzata==(direzione+2)%8||direzione_analizzata==(direzione+6)%8)
       {
-        euristica=euristica+3;
+        euristica=euristica+4;
       }
        if(direzione_analizzata==(direzione+3)%8||direzione_analizzata==(direzione+5)%8)
       {
-        euristica=euristica+2;
+        euristica=euristica+3;
       }
      if(direzione_analizzata==(direzione+4)%8)
       {
-        euristica=euristica+1;
+        euristica=euristica+2;
       }
 
-      if(euristica>euristica_max)
-      {
-        euristica_max=euristica;
-        direzione=direzione_analizzata;
-      }
-      if(euristica==euristica_max)
-      {
-        direzione=this->valutazioneEuristicheUguali(x, y, direzione, direzione_analizzata);
 
-      }
+    }
+    if(euristica>euristica_max)
+	{
+		euristica_max=euristica;
+		direzione_max=direzione_analizzata;
+	}
+	else
+	{
+		if(euristica==euristica_max)
+		{
+			  direzione_max=this->valutazioneEuristicheUguali(x, y, direzione_max, direzione_analizzata);
+
+		}
+	}
+   // cout<<"euristica"<<euristica<<endl;
+   // cout<<"direzione "<<direzione_analizzata<<endl;
+    if(direzione_analizzata==direzione_max)
+    {
+    	indice_casella_max=i;
     }
   }
+  cout<<"euristica max"<<euristica_max<<endl;
+  cout<<"direzione migliore "<<direzione_max<<endl;
 
-
-
-  return direzione;
+  return indice_casella_max;
 }
 
   int MyPathPlanning::valutazioneEuristicheUguali(int x[],int y[], int direzione1, int direzione2)
@@ -295,13 +314,19 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
     }
     double media1=sommatoria_settore1_sporco/sommatoria_settore1;
     double media2=sommatoria_settore2_sporco/sommatoria_settore2;
-    if(media1>=media2&&media2>0)
+    if(media2>media1&&media1>0)
     {
-    	return direzione2;
+    	return direzione1;
     }
     else
     {
+    	if(media2>0)
+    	{
+    		return direzione2;
+    	}
+
     	return direzione1;
+
     }
 
   }
@@ -334,6 +359,7 @@ void MyPathPlanning::getXY(int* x, int* y)
 
 int MyPathPlanning::approssimation2(double angle)
 {
+
 
 	if(angle<=(0+22.5)&&angle>=(0-22.5))
 	{

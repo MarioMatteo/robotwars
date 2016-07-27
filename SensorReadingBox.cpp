@@ -207,6 +207,7 @@ void SensorReadingBox::readSensor()
 //Approssima l'angolo di orientamento del robot con gli angoli delle nostre 8 possibili direzioni
 int SensorReadingBox::approssimation(double angle)
 {
+
 	if(angle<=(0+22.5)&&angle>=(0-22.5))
 	{
 		return 0;

@@ -92,8 +92,12 @@ void Quadrante::creaCasella(int x, int y)
 	
 	if(exist(x, y))
 	{
-		griglia.at(i).at(j).setExist(true);
-		griglia.at(i).at(j).setSporco(true);
+		if(griglia.at(i).at(j).isExist()==false)
+		{
+			griglia.at(i).at(j).setExist(true);
+			griglia.at(i).at(j).setSporco(true);
+		}
+
 	}
 }
 
