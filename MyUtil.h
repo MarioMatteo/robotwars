@@ -17,6 +17,8 @@ public:
 	//static double fromCartToPolar(int origin_x, int origin_y, int x, int y);
 	//static int approssimation(double angle);
 	static int centraCoordinate(int x, int unit);
+	static void coordinateFromMineToRobot(int x , int y, int newest[]  );
+	static void coordinateFromRobotToMine(int x, int y, int newest[]  );
 };
 
 #endif /* MYUTIL_H_ */

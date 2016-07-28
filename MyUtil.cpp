@@ -12,6 +12,8 @@ MyUtil::MyUtil() {
 
 }
 
+
+
 MyUtil::~MyUtil() {
 	// TODO Auto-generated destructor stub
 }
@@ -70,3 +72,20 @@ double MyUtil::fromCartToPolar(int origin_x, int origin_y, int x, int y)
   return atan((double)(origin_x+x)/(double)(origin_y+y));
 }
 */
+
+void MyUtil::coordinateFromMineToRobot(int x, int y, int newest[]  )
+{
+	int my_x= x;
+	int my_y=y;
+	newest[0]=my_y;
+	newest[1]=-my_x;
+}
+void MyUtil::coordinateFromRobotToMine(int x, int y, int newest[]  )
+{
+	int robot_x= x;
+	int robot_y=y;
+	newest[0]=-robot_y;
+	newest[1]=robot_x;
+
+}
+

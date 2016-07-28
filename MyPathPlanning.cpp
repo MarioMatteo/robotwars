@@ -139,10 +139,14 @@ robot->addAction(&limiterAction, 90);
    cout<<"nuova casella"<<endl;
    cout<<casella->isOstacolo()<<endl;
    cout<<casella->isSporco()<<endl;
-      gotoPoseAction.setGoal(ArPose(future_x, future_y));
+   int future_goal_coordinate[2];
+   MyUtil::coordinateFromMineToRobot(future_x, future_y, future_goal_coordinate);
+      gotoPoseAction.setGoal(ArPose(future_goal_coordinate[0], future_goal_coordinate[1]));
 
-      ArLog::log(ArLog::Normal, "Going to next goal at %.0f %.0f",
-            gotoPoseAction.getGoal().getX(), gotoPoseAction.getGoal().getY());
+      int my_goal[2];
+         MyUtil::coordinateFromRobotToMine(gotoPoseAction.getGoal().getX(), gotoPoseAction.getGoal().getY(), my_goal);
+      ArLog::log(ArLog::Normal, "Going to next goal  at %.0f %.0f",
+            my_goal[0], my_goal[1]);
 
 
     if(start.mSecSince() >= duration) {
@@ -156,7 +160,7 @@ robot->addAction(&limiterAction, 90);
     robot->unlock();
 
     cout<<"fine ciclo"<<endl;
-    ArUtil::sleep(500);
+    ArUtil::sleep(30000);
   }
   cout<<"uscita dal ciclo"<<endl;
 
@@ -246,8 +250,8 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
 
 		}
 	}
-   // cout<<"euristica"<<euristica<<endl;
-   // cout<<"direzione "<<direzione_analizzata<<endl;
+   cout<<"euristica"<<euristica<<endl;
+   cout<<"direzione "<<direzione_analizzata<<endl;
     if(direzione_analizzata==direzione_max)
     {
     	indice_casella_max=i;
@@ -395,3 +399,39 @@ int MyPathPlanning::approssimation2(double angle)
 
 
 }
+/*
+void MyPathPlanning::MyGoto(int direzione)
+{
+	int angle=0;
+	switch(direzione)
+	{
+	case 1:
+		angle=45;
+		break;
+	case 2:
+		angle=90;
+		break;
+	case 3:
+		angle=135;
+		break;
+	case 4:
+		angle=180;
+		break;
+	case 5:
+		angle=-135;
+		break;
+	case 6:
+		angle= -90;
+		break;
+	case 7:
+		angle=-45;
+		break;
+	}
+	robot->setDeltaHeading(angle);
+	robot->move(sqrt(2*angle*angle));
+
+
+	}
+
+}
+*/
