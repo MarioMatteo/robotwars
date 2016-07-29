@@ -110,7 +110,7 @@ void SensorReadingBox::readSensor()
 			}
 			break;
 		case -45:
-			for(int row=0;row>=-num_cell;row--)
+			for(int row=0;row<=num_cell;row++)
 			{
 				y_temp = MyUtil::centraCoordinate(y_robot + unit*row,unit);
 				for(int col=0;col>=-num_cell;col--)
@@ -203,7 +203,7 @@ void SensorReadingBox::readSensor()
 			for(int row=0;row>=-num_cell;row--)
 			{
 				y_temp = MyUtil::centraCoordinate(y_robot + unit*row,unit);
-				for(int col=0;col<=num_cell;col++)
+				for(int col=0;col>=-num_cell;col--)
 				{
 
 					x_temp = MyUtil::centraCoordinate(x_robot + unit*col,unit);

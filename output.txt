@@ -1,0 +1,129 @@
+Connecting to simulator through tcp.
+
+Syncing 0
+Syncing 1
+Syncing 2
+Connected to robot.
+Name: MobileSim
+Type: Pioneer
+Subtype: p3dx-sh-lms1xx
+ArConfig: Config version: 2.0
+Loaded robot parameters from /usr/local/Aria/params/p3dx-sh-lms1xx.p
+ArRobotConnector: Connected to simulator, not connecting to additional hardware components.
+Using new style simulated laser for lms1xx_1
+sim_lms1xx_1::setConnectionTimeoutSeconds: Setting timeout to 8 secs
+lasersExample: Connected to robot.
+sim_lms1xx_1: Connected to simulated laser.
+Connected to all lasers.
+
+ inizio ciclo
+distanza 20000
+casella lbera  -500 , 500
+distanza 20000
+casella lbera  0 , 500
+distanza 20000
+casella lbera  500 , 500
+euristica18
+direzione 0
+euristica17
+direzione 1
+euristica1
+direzione 2
+euristica1
+direzione 3
+euristica1
+direzione 4
+euristica1
+direzione 5
+euristica1
+direzione 6
+euristica17
+direzione 7
+euristica max18
+direzione migliore 0
+nuova casella
+Casella libera
+Casella sporca
+Going to  x = 0 y = 500
+1 Quadrante
+0 :P
+1 :SS
+2 Quadrante
+0 :?
+1 :?S
+3 Quadrante
+4 Quadrante
+fine ciclo
+distanza 1042.22
+casella occupata -500 , 1000
+distanza 1011.93
+casella occupata 0 , 1000
+distanza 1045.22
+casella occupata 500 , 1000
+euristica0
+direzione 0
+euristica0
+direzione 1
+euristica16
+direzione 2
+euristica1
+direzione 3
+euristica12
+direzione 4
+euristica1
+direzione 5
+euristica16
+direzione 6
+euristica0
+direzione 7
+euristica max16
+direzione migliore 2
+nuova casella
+Casella libera
+Casella sporca
+Going to  x = 500 y = 500
+1 Quadrante
+0 :P
+1 :PS
+2 :OO
+2 Quadrante
+0 :?
+1 :?SO
+3 Quadrante
+4 Quadrante
+fine ciclo
+euristica0
+direzione 1
+euristica0
+direzione 2
+euristica16
+direzione 3
+euristica1
+direzione 4
+euristica12
+direzione 5
+euristica1
+direzione 6
+euristica16
+direzione 7
+euristica0
+direzione 0
+euristica max16
+direzione migliore 3
+nuova casella
+Casella libera
+Casella sporca
+Going to  x = 500 y = 500
+1 Quadrante
+0 :P
+1 :PSO
+2 :OOO
+2 Quadrante
+0 :?
+1 :?SO
+3 Quadrante
+4 Quadrante
+fine ciclo
+Aria: Received signal 'SIGINT'. Exiting.
+Disconnecting from robot.
+ArTcpConnection::read: Attempt to read port that already closed. (80)
