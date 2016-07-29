@@ -57,7 +57,7 @@ int MyUtil::centraCoordinate(int x, int unit)
 {
 	int risultato;
 	int temp=x%(unit);
-	if(temp <= (unit/2))
+	if(temp < (unit/2))
 	{
 		risultato= x-temp;
 	}

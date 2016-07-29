@@ -29,7 +29,7 @@ MyPathPlanning::~MyPathPlanning() {
 
 void MyPathPlanning::percorri()
 {
-	SensorReadingBox* sensor = new SensorReadingBox(mappa, robot, unit, num_cell);
+	SensorReadingBox* sensor = new SensorReadingBox(mappa, robot,unit, num_cell);
 	int duration = 90000;
 	// Collision avoidance actions at higher priority
 	ArActionStallRecover recover;
@@ -53,7 +53,6 @@ void MyPathPlanning::percorri()
 	robot->comInt(ArCommands::SOUNDTOG, 0);
 
 	//int goalNum = 0;
-	// fase di inizializzazione parametri posizione robot
 	int direction=0;
 	ArTime start;
 	start.setToNow();
