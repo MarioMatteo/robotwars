@@ -11,17 +11,19 @@ ALL_FILES = *.cpp Makefile
 #ARIA_PREFIX=/home/cassinis/programmi_di_prova/src
 
 
-ARNETWORKING_INCLUDE_PATH=/usr/local/Arnl/include/ArNetworking
+#ARNETWORKING_INCLUDE_PATH=/usr/local/Arnl/include/ArNetworking
 ARIA_INCLUDE_PATH=/usr/local/Aria/include
 ARIA_LINK_PATH=/usr/local/Aria/lib
-ARNL_INCLUDE_PATH=/usr/local/Arnl/include
-ARNL_LINK_PATH=/usr/local/Arnl/lib
+#ARNL_INCLUDE_PATH=/usr/local/Arnl/include
+#ARNL_LINK_PATH=/usr/local/Arnl/lib
 
 
 CXX=g++
-CXXINC=-Iinclude -I$(ARIA_INCLUDE_PATH) -I$(ARNL_INCLUDE_PATH) -I/usr/include -I$(ARNETWORKING_INCLUDE_PATH)
-CXXLINK=-Llib -L$(ARIA_PREFIX)/$(ARIA_LINK_PATH) -L$(ARIA_PREFIX)/$(ARNL_LINK_PATH) -lAria -lArnl -lpthread -ldl -lrt
-BARECXXFLAGS= -g -Wall -D_REENTRANT
+#CXXINC=-Iinclude -I$(ARIA_INCLUDE_PATH) -I$(ARNL_INCLUDE_PATH) -I/usr/include -I$(ARNETWORKING_INCLUDE_PATH)
+CXXINC=-Iinclude -I$(ARIA_INCLUDE_PATH) -I/usr/include
+#CXXLINK=-Llib -L$(ARIA_PREFIX)/$(ARIA_LINK_PATH) -L$(ARIA_PREFIX)/$(ARNL_LINK_PATH) -lAria -lArnl -lpthread -ldl -lrt
+CXXLINK=-Llib -L$(ARIA_PREFIX)/$(ARIA_LINK_PATH) -lAria -lpthread -ldl -lrt
+BARECXXFLAGS= -g -D_REENTRANT
 CXXFLAGS+=$(BARECXXFLAGS) -fno-exceptions
 
 all:	$(PROGRAM_NAME)
