@@ -51,7 +51,7 @@
 	int Casella::getX()
 	{
 		if(quadrante == 0)
-			return x - dimensione/2;
+			return x -dimensione/2;
 		else if(quadrante == 1)
 			return -y - dimensione/2;
 		else if(quadrante == 2)

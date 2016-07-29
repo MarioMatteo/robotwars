@@ -13,11 +13,10 @@ class Mappa
 	private:
 		std::vector<Quadrante> quadranti;
 		void pulisciCoordinate(int x, int y, int coordinate[]);
-		int dimensioneCasella;
 		
 	public:
 		void getTutteCaselle(std::vector<Casella>* lista);
-		Mappa(int _dimensioneCasella);
+		Mappa(int dimensioneCasella);
 		~Mappa();
 		int checkQuadrante(int x, int y);
 		Quadrante getQuadrante(int i);	
