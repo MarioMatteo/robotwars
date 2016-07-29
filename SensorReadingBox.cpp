@@ -7,6 +7,8 @@
 
 #include "SensorReadingBox.h"
 
+//A volte non vede gli ostacoli
+
 SensorReadingBox::SensorReadingBox(Mappa* mappa, ArRobot* robot,  int unit, int num_cell) {
 	this->mappa=mappa;
 	this->unit=unit;
@@ -104,6 +106,11 @@ void SensorReadingBox::readSensor()
 						if(distance >=0  &&  distance < max_range)
 						{
 							mappa->occupaCasella(x_temp,y_temp);
+							cout<<"casella occupata "<<x_temp<<" , "<<y_temp<<endl;
+						}
+						else
+						{
+							cout<<"casella lbera  "<<x_temp<<" , "<<y_temp<<endl;
 						}
 					}
 				}
@@ -128,6 +135,11 @@ void SensorReadingBox::readSensor()
 						if(distance>=0&&distance<max_range)
 						{
 							mappa->occupaCasella(x_temp,y_temp);
+							cout<<"casella occupata "<<x_temp<<" , "<<y_temp<<endl;
+						}
+						else
+						{
+							cout<<"casella lbera  "<<x_temp<<" , "<<y_temp<<endl;
 						}
 					}
 				}
@@ -150,6 +162,11 @@ void SensorReadingBox::readSensor()
 					if(distance>=0&&distance<max_range)
 					{
 						mappa->occupaCasella(x_temp,y_temp);
+						cout<<"casella occupata "<<x_temp<<" , "<<y_temp<<endl;
+					}
+					else
+					{
+						cout<<"casella lbera  "<<x_temp<<" , "<<y_temp<<endl;
 					}
 				}
 			}
@@ -171,6 +188,11 @@ void SensorReadingBox::readSensor()
 					if(distance>=0&&distance<max_range)
 					{
 						mappa->occupaCasella(x_temp,y_temp);
+						cout<<"casella occupata "<<x_temp<<" , "<<y_temp<<endl;
+					}
+					else
+					{
+						cout<<"casella lbera  "<<x_temp<<" , "<<y_temp<<endl;
 					}
 				}
 			}
@@ -194,6 +216,11 @@ void SensorReadingBox::readSensor()
 						if(distance>=0&&distance<max_range)
 						{
 							mappa->occupaCasella(x_temp,y_temp);
+							cout<<"casella occupata "<<x_temp<<" , "<<y_temp<<endl;
+						}
+						else
+						{
+							cout<<"casella lbera  "<<x_temp<<" , "<<y_temp<<endl;
 						}
 					}
 				}
@@ -218,6 +245,11 @@ void SensorReadingBox::readSensor()
 						if(distance>=0&&distance<max_range)
 						{
 							mappa->occupaCasella(x_temp,y_temp);
+							cout<<"casella occupata "<<x_temp<<" , "<<y_temp<<endl;
+						}
+						else
+						{
+							cout<<"casella lbera  "<<x_temp<<" , "<<y_temp<<endl;
 						}
 					}
 				}
@@ -239,6 +271,11 @@ void SensorReadingBox::readSensor()
 					if(distance>=0&&distance<max_range)
 					{
 						mappa->occupaCasella(x_temp,y_temp);
+						cout<<"casella occupata "<<x_temp<<" , "<<y_temp<<endl;
+					}
+					else
+					{
+						cout<<"casella lbera  "<<x_temp<<" , "<<y_temp<<endl;
 					}
 				}
 			}

@@ -34,8 +34,8 @@ void MyPathPlanning::percorri()
 	// Collision avoidance actions at higher priority
 	ArActionStallRecover recover;
 	ArActionBumpers bumpers;
-	//ArActionLimiterForwards limiterAction("speed limiter far", unit/2, unit*2, 400);
-	//ArActionAvoidFront avoidFrontNear("Avoid Front Near", unit/2, 400, 45);
+	ArActionLimiterForwards limiterAction("speed limiter far", unit/100, unit, 400);
+	ArActionAvoidFront avoidFrontNear("Avoid Front Near", unit/10, 400, 45);
 
 	robot->addAction(&recover, 100);
 	robot->addAction(&bumpers, 75);
