@@ -79,6 +79,9 @@ void SensorReadingBox::readSensor()
 					//y_temp_robot=centro_casella_robot[1]-y_robot;
 
 					double distance = laser->currentReadingBox((double) x_temp_robot-unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
+					//double distance = laser->currentReadingBox((double) x_temp_robot+unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
+
+
 					mappa->creaCasella(x_temp,y_temp);
 					cout<<"distanza "<<distance<<endl;
 					if(distance > 0  &&  distance < max_range)
@@ -118,6 +121,9 @@ void SensorReadingBox::readSensor()
 						//x_temp_robot=centro_casella_robot[0]-x_robot;
 						//y_temp_robot=centro_casella_robot[1]-y_robot;
 						double distance = laser->currentReadingBox((double) x_temp_robot-unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
+						//double distance = laser->currentReadingBox((double) x_temp_robot+unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
+
+
 						mappa->creaCasella(x_temp,y_temp);
 						if(distance >0  &&  distance < max_range)
 						{
@@ -156,6 +162,10 @@ void SensorReadingBox::readSensor()
 						//x_temp_robot=centro_casella_robot[0]-x_robot;
 						//y_temp_robot=centro_casella_robot[1]-y_robot;
 						double distance = laser->currentReadingBox((double) x_temp_robot-unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
+						//double distance = laser->currentReadingBox((double) x_temp_robot+unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
+
+
+
 						mappa->creaCasella(x_temp,y_temp);
 						if(distance>0&&distance<max_range)
 						{
@@ -192,6 +202,10 @@ void SensorReadingBox::readSensor()
 					//x_temp_robot=centro_casella_robot[0]-x_robot;
 					//y_temp_robot=centro_casella_robot[1]-y_robot;
 					double distance = laser->currentReadingBox((double) x_temp_robot-unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
+					//double distance = laser->currentReadingBox((double) x_temp_robot+unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
+
+
+
 					mappa->creaCasella(x_temp,y_temp);
 					if(distance>0&&distance<max_range)
 					{
@@ -215,7 +229,7 @@ void SensorReadingBox::readSensor()
 			{
 				x_temp = MyUtil::centraCoordinate(x_robot + unit*col,unit);
 
-				for(int row=-col;row<=col;row++)
+				for(int row=col;row<=-col;row++)
 				{
 					y_temp = MyUtil::centraCoordinate(y_robot + unit*row,unit);
 					int centro_casella_robot[2];
@@ -224,9 +238,13 @@ void SensorReadingBox::readSensor()
 					x_temp_robot=centro_casella_robot[0];
 					y_temp_robot=centro_casella_robot[1];
 
-					//x_temp_robot=centro_casella_robot[0];
-					//y_temp_robot=centro_casella_robot[1];
+					//x_temp_robot=centro_casella_robot[0]-x_robot;
+					//y_temp_robot=centro_casella_robot[1]-y_robot;
 					double distance = laser->currentReadingBox((double) x_temp_robot-unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
+					//double distance = laser->currentReadingBox((double) x_temp_robot+unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
+
+
+
 					mappa->creaCasella(x_temp,y_temp);
 					if(distance>=0&&distance<max_range)
 					{
@@ -264,6 +282,10 @@ void SensorReadingBox::readSensor()
 						//x_temp_robot=centro_casella_robot[0]-x_robot;
 						//y_temp_robot=centro_casella_robot[1]-y_robot;
 						double distance = laser->currentReadingBox((double) x_temp_robot-unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
+						//double distance = laser->currentReadingBox((double) x_temp_robot+unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
+
+
+
 						mappa->creaCasella(x_temp,y_temp);
 						if(distance>=0&&distance<max_range)
 						{
@@ -302,6 +324,10 @@ void SensorReadingBox::readSensor()
 						//x_temp_robot=centro_casella_robot[0]-x_robot;
 						//y_temp_robot=centro_casella_robot[1]-y_robot;
 						double distance = laser->currentReadingBox((double) x_temp_robot-unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
+						//double distance = laser->currentReadingBox((double) x_temp_robot+unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
+
+
+
 						mappa->creaCasella(x_temp,y_temp);
 						if(distance>=0&&distance<max_range)
 						{
@@ -325,7 +351,7 @@ void SensorReadingBox::readSensor()
 			for(int row=-1;row>=-num_cell;row--)
 			{
 				y_temp =MyUtil::centraCoordinate(y_robot + unit*row,unit);
-				for(int col=-row;col<=row;col++)
+				for(int col=row;col<=-row;col++)
 				{
 					x_temp =MyUtil::centraCoordinate(x_robot + unit*col,unit);
 					int centro_casella_robot[2];
@@ -337,6 +363,10 @@ void SensorReadingBox::readSensor()
 					//x_temp_robot=centro_casella_robot[0]-x_robot;
 					//y_temp_robot=centro_casella_robot[1]-y_robot;
 					double distance = laser->currentReadingBox((double) x_temp_robot-unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
+					//double distance = laser->currentReadingBox((double) x_temp_robot+unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
+
+
+
 					mappa->creaCasella(x_temp,y_temp);
 					if(distance>0&&distance<max_range)
 					{

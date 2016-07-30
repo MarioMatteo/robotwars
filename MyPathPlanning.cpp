@@ -32,15 +32,15 @@ void MyPathPlanning::percorri()
 	SensorReadingBox* sensor = new SensorReadingBox(mappa, robot, unit, num_cell);
 	int duration = 90000;
 	// Collision avoidance actions at higher priority
-	ArActionStallRecover recover;
+	ArActionStallRecover recover("stall recover",unit/11);
 	ArActionBumpers bumpers;
-	ArActionLimiterForwards limiterAction("speed limiter far", unit/100, unit, 400);
-	ArActionAvoidFront avoidFrontNear("Avoid Front Near", unit/10, 400, 45);
+	ArActionLimiterForwards limiterAction("speed limiter far", unit/100, unit, 200);
+	ArActionAvoidFront avoidFrontNear("Avoid Front Near", unit/10, 200, 45);
 
 	robot->addAction(&recover, 100);
 	robot->addAction(&bumpers, 75);
-	//robot->addAction(&avoidFrontNear, 50);
-	//robot->addAction(&limiterAction, 90);
+	robot->addAction(&avoidFrontNear, 55);
+	robot->addAction(&limiterAction, 90);
 	ArActionGoto gotoPoseAction("goto");
 	robot->addAction(&gotoPoseAction, 50);
 
