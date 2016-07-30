@@ -32,8 +32,10 @@ void SensorReadingBox::readSensor()
 	y_robot=current_position.getY();
 	int my_position[2];
 	MyUtil::coordinateFromRobotToMine(x_robot,y_robot,my_position);
-	x_robot=my_position[0];
-	y_robot=my_position[1];
+
+//Altrimenti il robot leggeva anche la casella su cui era posizionato quando faceva letture in diagonale
+	x_robot=MyUtil::centraCoordinate(my_position[0],unit);
+	y_robot=MyUtil::centraCoordinate(my_position[1],unit);
 
 	// direzione del robot in gradi rispetto alla direzione nel punto di avvio iniziale
 	direction_robot=current_position.getTh();
@@ -47,6 +49,7 @@ void SensorReadingBox::readSensor()
 
 	// inizializzazione laser per rilevamento ostacoli
 	std::map<int,ArLaser*> *lasers = robot->getLaserMap(); 
+	cout<<lasers->size()<<endl;
 	std::map<int,ArLaser*>::const_iterator i = lasers->begin();
 	laser = (*i).second;
 	int max_range = laser->getAbsoluteMaxRange(); // laser rileva un ostacolo a distanza max_range se non c'è un ostacolo
@@ -68,19 +71,29 @@ void SensorReadingBox::readSensor()
 					//double distance = robot->checkRangeDevicesCurrentBox((double) x_temp-unit/2,(double) y_temp-unit/2, (double) x_temp+unit/2, (double) y_temp+unit/2, obstacle,&laser );
 					int centro_casella_robot[2]; // vettore che conterra' il risultato della trasformazione
 					MyUtil::coordinateFromMineToRobot(x_temp,y_temp, centro_casella_robot);
+
 					x_temp_robot=centro_casella_robot[0];
 					y_temp_robot=centro_casella_robot[1];
+
+					//x_temp_robot=centro_casella_robot[0]-x_robot;
+					//y_temp_robot=centro_casella_robot[1]-y_robot;
 
 					double distance = laser->currentReadingBox((double) x_temp_robot-unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
 					mappa->creaCasella(x_temp,y_temp);
 					cout<<"distanza "<<distance<<endl;
-					if(distance >= 0  &&  distance < max_range)
+					if(distance > 0  &&  distance < max_range)
 					{
 						mappa->occupaCasella(x_temp,y_temp);
 						cout<<"casella occupata "<<x_temp<<" , "<<y_temp<<endl;
 					}
 					else
 					{
+						//Se la casella prima era vista come un ostacolo e ora no allora la considero libera
+						if(mappa->getCasella(x_temp,y_temp)->isOstacolo()==true)
+						{
+							mappa->liberaCasella(x_temp,y_temp);
+						}
+
 						cout<<"casella lbera  "<<x_temp<<" , "<<y_temp<<endl;
 					}
 				}
@@ -101,16 +114,24 @@ void SensorReadingBox::readSensor()
 						MyUtil::coordinateFromMineToRobot(x_temp,y_temp, centro_casella_robot);
 						x_temp_robot=centro_casella_robot[0];
 						y_temp_robot=centro_casella_robot[1];
+
+						//x_temp_robot=centro_casella_robot[0]-x_robot;
+						//y_temp_robot=centro_casella_robot[1]-y_robot;
 						double distance = laser->currentReadingBox((double) x_temp_robot-unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
 						mappa->creaCasella(x_temp,y_temp);
-						if(distance >=0  &&  distance < max_range)
+						if(distance >0  &&  distance < max_range)
 						{
 							mappa->occupaCasella(x_temp,y_temp);
 							cout<<"casella occupata "<<x_temp<<" , "<<y_temp<<endl;
 						}
 						else
 						{
-							cout<<"casella lbera  "<<x_temp<<" , "<<y_temp<<endl;
+							//Se la casella prima era vista come un ostacolo e ora no allora la considero libera
+						if(mappa->getCasella(x_temp,y_temp)->isOstacolo()==true)
+						{
+							mappa->liberaCasella(x_temp,y_temp);
+						}
+						cout<<"casella lbera  "<<x_temp<<" , "<<y_temp<<endl;
 						}
 					}
 				}
@@ -128,18 +149,27 @@ void SensorReadingBox::readSensor()
 					{
 						int centro_casella_robot[2];
 						MyUtil::coordinateFromMineToRobot(x_temp,y_temp, centro_casella_robot);
+
 						x_temp_robot=centro_casella_robot[0];
 						y_temp_robot=centro_casella_robot[1];
+
+						//x_temp_robot=centro_casella_robot[0]-x_robot;
+						//y_temp_robot=centro_casella_robot[1]-y_robot;
 						double distance = laser->currentReadingBox((double) x_temp_robot-unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
 						mappa->creaCasella(x_temp,y_temp);
-						if(distance>=0&&distance<max_range)
+						if(distance>0&&distance<max_range)
 						{
 							mappa->occupaCasella(x_temp,y_temp);
 							cout<<"casella occupata "<<x_temp<<" , "<<y_temp<<endl;
 						}
 						else
 						{
-							cout<<"casella lbera  "<<x_temp<<" , "<<y_temp<<endl;
+							//Se la casella prima era vista come un ostacolo e ora no allora la considero libera
+						if(mappa->getCasella(x_temp,y_temp)->isOstacolo()==true)
+						{
+							mappa->liberaCasella(x_temp,y_temp);
+						}
+						cout<<"casella lbera  "<<x_temp<<" , "<<y_temp<<endl;
 						}
 					}
 				}
@@ -155,17 +185,26 @@ void SensorReadingBox::readSensor()
 					y_temp = MyUtil::centraCoordinate(y_robot + unit*row,unit);
 					int centro_casella_robot[2];
 					MyUtil::coordinateFromMineToRobot(x_temp,y_temp, centro_casella_robot);
+
 					x_temp_robot=centro_casella_robot[0];
 					y_temp_robot=centro_casella_robot[1];
+
+					//x_temp_robot=centro_casella_robot[0]-x_robot;
+					//y_temp_robot=centro_casella_robot[1]-y_robot;
 					double distance = laser->currentReadingBox((double) x_temp_robot-unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
 					mappa->creaCasella(x_temp,y_temp);
-					if(distance>=0&&distance<max_range)
+					if(distance>0&&distance<max_range)
 					{
 						mappa->occupaCasella(x_temp,y_temp);
 						cout<<"casella occupata "<<x_temp<<" , "<<y_temp<<endl;
 					}
 					else
 					{
+						//Se la casella prima era vista come un ostacolo e ora no allora la considero libera
+						if(mappa->getCasella(x_temp,y_temp)->isOstacolo()==true)
+						{
+							mappa->liberaCasella(x_temp,y_temp);
+						}
 						cout<<"casella lbera  "<<x_temp<<" , "<<y_temp<<endl;
 					}
 				}
@@ -181,8 +220,12 @@ void SensorReadingBox::readSensor()
 					y_temp = MyUtil::centraCoordinate(y_robot + unit*row,unit);
 					int centro_casella_robot[2];
 					MyUtil::coordinateFromMineToRobot(x_temp,y_temp, centro_casella_robot);
+
 					x_temp_robot=centro_casella_robot[0];
 					y_temp_robot=centro_casella_robot[1];
+
+					//x_temp_robot=centro_casella_robot[0];
+					//y_temp_robot=centro_casella_robot[1];
 					double distance = laser->currentReadingBox((double) x_temp_robot-unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
 					mappa->creaCasella(x_temp,y_temp);
 					if(distance>=0&&distance<max_range)
@@ -192,6 +235,11 @@ void SensorReadingBox::readSensor()
 					}
 					else
 					{
+						//Se la casella prima era vista come un ostacolo e ora no allora la considero libera
+						if(mappa->getCasella(x_temp,y_temp)->isOstacolo()==true)
+						{
+							mappa->liberaCasella(x_temp,y_temp);
+						}
 						cout<<"casella lbera  "<<x_temp<<" , "<<y_temp<<endl;
 					}
 				}
@@ -209,8 +257,12 @@ void SensorReadingBox::readSensor()
 					{
 						int centro_casella_robot[2];
 						MyUtil::coordinateFromMineToRobot(x_temp,y_temp, centro_casella_robot);
+
 						x_temp_robot=centro_casella_robot[0];
 						y_temp_robot=centro_casella_robot[1];
+
+						//x_temp_robot=centro_casella_robot[0]-x_robot;
+						//y_temp_robot=centro_casella_robot[1]-y_robot;
 						double distance = laser->currentReadingBox((double) x_temp_robot-unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
 						mappa->creaCasella(x_temp,y_temp);
 						if(distance>=0&&distance<max_range)
@@ -220,7 +272,12 @@ void SensorReadingBox::readSensor()
 						}
 						else
 						{
-							cout<<"casella lbera  "<<x_temp<<" , "<<y_temp<<endl;
+							//Se la casella prima era vista come un ostacolo e ora no allora la considero libera
+						if(mappa->getCasella(x_temp,y_temp)->isOstacolo()==true)
+						{
+							mappa->liberaCasella(x_temp,y_temp);
+						}
+						cout<<"casella lbera  "<<x_temp<<" , "<<y_temp<<endl;
 						}
 					}
 				}
@@ -238,8 +295,12 @@ void SensorReadingBox::readSensor()
 					{
 						int centro_casella_robot[2];
 						MyUtil::coordinateFromMineToRobot(x_temp,y_temp, centro_casella_robot);
+
 						x_temp_robot=centro_casella_robot[0];
 						y_temp_robot=centro_casella_robot[1];
+
+						//x_temp_robot=centro_casella_robot[0]-x_robot;
+						//y_temp_robot=centro_casella_robot[1]-y_robot;
 						double distance = laser->currentReadingBox((double) x_temp_robot-unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
 						mappa->creaCasella(x_temp,y_temp);
 						if(distance>=0&&distance<max_range)
@@ -249,7 +310,12 @@ void SensorReadingBox::readSensor()
 						}
 						else
 						{
-							cout<<"casella lbera  "<<x_temp<<" , "<<y_temp<<endl;
+							//Se la casella prima era vista come un ostacolo e ora no allora la considero libera
+						if(mappa->getCasella(x_temp,y_temp)->isOstacolo()==true)
+						{
+							mappa->liberaCasella(x_temp,y_temp);
+						}
+						cout<<"casella lbera  "<<x_temp<<" , "<<y_temp<<endl;
 						}
 					}
 				}
@@ -264,11 +330,15 @@ void SensorReadingBox::readSensor()
 					x_temp =MyUtil::centraCoordinate(x_robot + unit*col,unit);
 					int centro_casella_robot[2];
 					MyUtil::coordinateFromMineToRobot(x_temp,y_temp, centro_casella_robot);
+
 					x_temp_robot=centro_casella_robot[0];
 					y_temp_robot=centro_casella_robot[1];
+
+					//x_temp_robot=centro_casella_robot[0]-x_robot;
+					//y_temp_robot=centro_casella_robot[1]-y_robot;
 					double distance = laser->currentReadingBox((double) x_temp_robot-unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
 					mappa->creaCasella(x_temp,y_temp);
-					if(distance>=0&&distance<max_range)
+					if(distance>0&&distance<max_range)
 					{
 						mappa->occupaCasella(x_temp,y_temp);
 						cout<<"casella occupata "<<x_temp<<" , "<<y_temp<<endl;

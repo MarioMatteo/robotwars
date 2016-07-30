@@ -125,7 +125,7 @@ void MyPathPlanning::percorri()
 			gotoPoseAction.cancelGoal();
 			robot->unlock();
 			ArUtil::sleep(3000);
-			cout << "pulizia completata (futura direzione)" << endl;
+			cout << "pulizia completata" << endl;
 			break;
 		}
 
@@ -181,24 +181,11 @@ Aria::exit(0);
 int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
 {
 	bool all_cleaned=true;
-	std::vector<Casella>  lista;
-	mappa->getTutteCaselle(&lista);
-	for(int i=0;i<(int)lista.size();i++)
-	{
-		//spazzolo tutta la mappa salvando le due medie
-		Casella da_controllare=lista[i];
-		if(da_controllare.isSporco()==true)
-		{
-			all_cleaned=false;
-		}
-	}
-	if(all_cleaned)
-	{
-		return -1; // significa che ha pulito tutto
-	}
+
 	int euristica_max=0;
 	int indice_casella_max=0;
 	int direzione_max=direzione;
+	bool casella_non_visitata=false;
 	//la direzione migliore è quella di andare avanti seguendo la propria direzione che all'inizio corrisponde alla direzione 0
 	for(int i=0;i<8;i++)
 	{
@@ -212,10 +199,11 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
 		if(casella->isOstacolo()==false&& casella->isExist())
 		{
       			euristica=euristica+12;
-    		}
-    		if(casella->isExist()==false)
+		}
+		if(casella->isExist()==false)
 	 	{
 			euristica=euristica+1;
+			casella_non_visitata=true;
 	 	}
 		if(casella->isSporco()==true && casella->isExist())
 		{
@@ -252,15 +240,34 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
 				direzione_max=this->valutazioneEuristicheUguali(x, y, direzione_max, direzione_analizzata);
 			}
 		}
-		cout<<"euristica"<<euristica<<endl;
-		cout<<"direzione "<<direzione_analizzata<<endl;
+		//cout<<"euristica"<<euristica<<endl;
+		//cout<<"direzione "<<direzione_analizzata<<endl;
 		if(direzione_analizzata==direzione_max)
 		{
 			indice_casella_max=i;
 		}
 	}
-	cout << "euristica max" << euristica_max << endl;
-	cout << "direzione migliore " << direzione_max << endl;
+	//cout << "euristica max" << euristica_max << endl;
+	//cout << "direzione migliore " << direzione_max << endl;
+	std::vector<Casella>  lista;
+	mappa->getTutteCaselle(&lista);
+	for(int i=0;i<(int)lista.size();i++)
+	{
+
+		Casella da_controllare=lista[i];
+		//Per essere una casella sporca deve essere sporca e anche esistere, per evitare che il robot cerchi di pulire anche caselle che non esistono realmente
+		if(da_controllare.isSporco()==true&&da_controllare.isExist()==true)
+		{
+			all_cleaned=false;
+		}
+	}
+	//Se ho pulito tutte le caselle della mappa corrente e nell'intorno del robot non esistono caselle che non sono
+	//state viste in precedenza allora ho finito
+	//il controllo sulle caselle è stato aggiunto per evitare che il robot finisca subito se inizia rivolto verso il muro
+	if(all_cleaned==true&&casella_non_visitata==false)
+	{
+		return -1; // significa che ha pulito tutto
+	}
 	return indice_casella_max;
 }
 
