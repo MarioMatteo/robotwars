@@ -1,0 +1,14 @@
+#include <iostream>
+#include "MyUtil.h"
+
+using namespace std;
+
+void main()
+{
+	int unit = 1000;
+	int prove[] = {-1501,-1001,-1000,-501,-500,0,250,500,501,750,1000,1001,1250,1500,1501,1750,2000,2001};
+	for(int i = 0; i < 18; i++)
+	{
+		cout << prove[i] << " viene centrato in " << MyUtil::centraCoordinate(prove[i], unit) << endl;
+	}
+}

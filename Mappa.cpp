@@ -115,12 +115,14 @@ Casella* Mappa::getCasella(int x, int y)
 	return quadranti[i].getCasella(coordinate[0], coordinate[1]);
 }
 
+
 void Mappa::toString()
 {
 	int i = 0;
 	for(i = 0; i < 4; i++)
 	{
-		cout << i+1 << " Quadrante" << endl;
+		cout << "Quadrante " << i+1 << endl;
 		quadranti[i].toString();
 	}
 }
+

@@ -55,15 +55,22 @@ int MyUtil::approssimation(double angle)
 */
 int MyUtil::centraCoordinate(int x, int unit)
 {
+	int sign = 1;
+	if(x<0)
+	{
+		sign = -1;	
+	}
+	x = x*sign;
 	int risultato;
-	int temp=x%(unit);
-	if(temp < (unit/2))
+	int temp = x % (unit);
+	if(temp <= (unit/2))
 	{
 		risultato= x-temp;
 	}
 	else
 		risultato =(floor(x/unit)+1)*unit;
-
+	
+	x = x*sign;
 	return risultato;
 }
 /*
@@ -75,17 +82,17 @@ double MyUtil::fromCartToPolar(int origin_x, int origin_y, int x, int y)
 
 void MyUtil::coordinateFromMineToRobot(int x, int y, int newest[]  )
 {
-	int my_x= x;
-	int my_y=y;
-	newest[0]=my_y;
-	newest[1]=-my_x;
+	int my_x = x;
+	int my_y = y;
+	newest[0] = my_y;
+	newest[1] =-my_x;
 }
 void MyUtil::coordinateFromRobotToMine(int x, int y, int newest[]  )
 {
-	int robot_x= x;
-	int robot_y=y;
-	newest[0]=-robot_y;
-	newest[1]=robot_x;
+	int robot_x = x;
+	int robot_y = y;
+	newest[0] =-robot_y;
+	newest[1] = robot_x;
 
 }
 

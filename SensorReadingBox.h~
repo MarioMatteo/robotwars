@@ -22,7 +22,7 @@ private:
 	ArRobot* robot;
 	void readCell(int x, int y);
 	int approssimation(double angle);
-	void scan_for_obstacles(vector<int>& rows_ind, vector<int>& cols_ind, int xy_robot[2], ArLaser* laser, Mappa* mappa);
+	void scan_for_obstacles(vector<int>& rows_ind, vector<int>& cols_ind, int xy_robot[2], ArLaser* laser);
 public:
 	void readSensor();
 	SensorReadingBox(Mappa* mappa, ArRobot* robot,  int unit, int num_cell);

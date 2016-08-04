@@ -31,21 +31,31 @@ void MyPathPlanning::percorri()
 {
 	SensorReadingBox* sensor = new SensorReadingBox(mappa, robot, unit, num_cell);
 	int duration = 90000;
+
 	// Collision avoidance actions at higher priority
 	ArActionStallRecover recover("stall recover",unit/11);
 	ArActionBumpers bumpers;
-	ArActionLimiterForwards limiterAction("speed limiter far", unit/100, unit, 200);
-	ArActionAvoidFront avoidFrontNear("Avoid Front Near", unit/10, 200, 45);
-
+	//ArActionLimiterForwards limiterAction("speed limiter far", unit/100, unit, 200);
+	ArActionLimiterForwards limiterAction("speed limiter far", 200, 1000, 200, 1);
+	
+	//ArActionAvoidFront avoidFrontNear("Avoid Front Near", unit/10, 200, 45);
+	ArActionAvoidFront avoidFrontNear("Avoid Front Near", 450, 200, 15);
+	
 	robot->addAction(&recover, 100);
 	robot->addAction(&bumpers, 75);
 	robot->addAction(&avoidFrontNear, 55);
+	//robot->addAction(&avoidFrontNear, 90);
+	
 	robot->addAction(&limiterAction, 90);
+	//robot->addAction(&limiterAction, 55);
+
+	// Action to set goal to robot
 	ArActionGoto gotoPoseAction("goto");
 	robot->addAction(&gotoPoseAction, 50);
 
 	// Stop action at lower priority, so the robot stops if it has no goal
 	ArActionStop stopAction("stop");
+	ArActionStop stopToMapping("stop_mapping");
 	robot->addAction(&stopAction, 40);
 
 	// turn on the motors, turn off amigobot sounds
@@ -60,21 +70,36 @@ void MyPathPlanning::percorri()
 	int previus_x=-1;
 	int previus_y=-1;
 	mappa->creaCasella(0,0);
-	cout<<"\n inizio ciclo"<<endl;
+
+	int numero_iterazione_ciclo = 1;
+	
 	while (Aria::getRunning())
 	{
+		robot->remAction(&avoidFrontNear);	
+		robot->remAction(&limiterAction);
+		robot->remAction(&gotoPoseAction);
+		
+		cout<<"\n### INIZIO CICLO #"<< numero_iterazione_ciclo++ <<" ###"<<endl;
 		robot->lock();
 		int current_x;
 		int current_y;
 
+		//robot->addAction(&stopToMapping, 99);
+		//cout << "stoppato" << endl;
+		//ArUtil::sleep(3000);
 		this->getXY(&current_x,&current_y);
-		sensor->readSensor();
-		current_x = MyUtil::centraCoordinate(current_x,unit);
-		current_y = MyUtil::centraCoordinate(current_y,unit);
+		cout << "appena assegnate: x = " << current_x << " y = " << current_y << endl;
 		int my_position[2];
+		MyUtil::coordinateFromRobotToMine(current_x, current_y, my_position); 
+		current_x = MyUtil::centraCoordinate(my_position[0], unit);
+		current_y = MyUtil::centraCoordinate(my_position[1], unit);
+		cout << "dopo trasformazione: x = " << current_x << " y = " << current_y << endl;
+
+		sensor->readSensor();
+		/*int my_position[2];
 		MyUtil::coordinateFromRobotToMine(current_x, current_y, my_position);
 		current_x = my_position[0];
-		current_y = my_position[1]; 
+		current_y = my_position[1];*/ 
 		mappa->pulisciCasella(current_x, current_y);
 
 		if(current_x != previus_x  ||  current_y != previus_y)
@@ -135,19 +160,25 @@ void MyPathPlanning::percorri()
 		direction=futura_direzione;
 
 		Casella* casella= mappa->getCasella(future_x,future_y);
-		cout<<"nuova casella"<<endl;
+		cout << endl;
+		cout << " - DETERMINAZIONE FUTURA DIREZIONE" << endl;
+		cout << "Posizione attuale: x = " << current_x << ", y = " << current_y << endl;
+		//ArLog::log(ArLog::Normal, "Going to  x = %d y = %d", future_x, future_y);
+		cout << "Diretto a: x = " << future_x << ", y = " << future_y << endl;
+		//cout<<"nuova casella"<<endl;
 		if(casella->isOstacolo())
-			cout << "Casella occupata" << endl;
+			cout << "Casella occupata e ";
 		else
-			cout << "Casella libera" << endl;
+			cout << "Casella libera e ";
 		if(casella->isSporco())		
-			cout << "Casella sporca" << endl;
+			cout << "sporca" << endl;
 		else
-			cout << "Casella pulita" << endl;
+			cout << "pulita" << endl;
 
-		ArLog::log(ArLog::Normal, "Going to  x = %d y = %d", future_x, future_y);
+		
 		int future_goal_coordinate[2];
 		MyUtil::coordinateFromMineToRobot(future_x, future_y, future_goal_coordinate);
+		//robot->remAction(&stopToMapping);
 		gotoPoseAction.setGoal(ArPose(future_goal_coordinate[0], future_goal_coordinate[1]));
 
 		//int my_goal[2];
@@ -164,11 +195,18 @@ void MyPathPlanning::percorri()
 			break;
 		}
 
+		robot->addAction(&avoidFrontNear, 55);	
+		robot->addAction(&limiterAction, 90);
+		robot->addAction(&gotoPoseAction, 50);
+		
 		robot->unlock();
 		
+		cout << endl;
+		cout << "- STATO MAPPA" << endl;
 		this->mappa->toString();
-		cout<<"fine ciclo"<<endl;
-		ArUtil::sleep(10000);
+		cout << endl;
+		cout<<"### FINE CICLO ###"<<endl<<endl<<endl;
+		ArUtil::sleep(13000);
 }
 cout<<"uscita dal ciclo"<<endl;
 
