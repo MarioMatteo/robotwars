@@ -426,7 +426,7 @@ void SensorReadingBox::readSensor()
 				}
 			}
 			break;*/
-		case 180:
+		case -180:
 		{
 			int rows_scan[] = {-1};
 			int cols_scan[] = {-1,0,1};
@@ -540,7 +540,7 @@ void SensorReadingBox::scan_for_obstacles(vector<int>& rows_ind, vector<int>& co
 			
 				obstacle = new ArPose();
 				double distance = laser->currentReadingBox((double) x_temp_robot-unit/2, (double) y_temp_robot-unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot+unit/2, obstacle);
-				cout << "coordinate ostacolo dopo reading: x = " << obstacle->getX() << " y = " << obstacle->getY() << endl;
+				//cout << "coordinate ostacolo dopo reading: x = " << obstacle->getX() << " y = " << obstacle->getY() << endl;
 				//double distance = laser->currentReadingBox((double) x_temp_robot+unit/2,(double) y_temp_robot+unit/2, (double) x_temp_robot+unit/2, (double) y_temp_robot-unit/2, obstacle );
 			
 				/*if(obstacle->getX() == 0 && obstacle->getY() == 0 && distance >= 20000)
@@ -560,7 +560,7 @@ void SensorReadingBox::scan_for_obstacles(vector<int>& rows_ind, vector<int>& co
 				if(distance > 0  &&  distance < max_range)
 				{
 					mappa->occupaCasella(x_temp,y_temp);
-					cout<<"casella occupata "<<x_temp<<" , "<<y_temp<<endl;
+					//cout<<"casella occupata "<<x_temp<<" , "<<y_temp<<endl;
 				}
 				else
 				{
@@ -570,12 +570,12 @@ void SensorReadingBox::scan_for_obstacles(vector<int>& rows_ind, vector<int>& co
 						mappa->liberaCasella(x_temp,y_temp);
 					}
 
-					cout<<"casella libera  "<<x_temp<<" , "<<y_temp<<endl;
+					//cout<<"casella libera  "<<x_temp<<" , "<<y_temp<<endl;
 				}
 			}
 			else
 			{
-				cout << "sto controllando la stessa casella del robot" << endl;
+				//cout << "sto controllando la stessa casella del robot" << endl;
 			}
 		}
 	}

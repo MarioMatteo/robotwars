@@ -45,7 +45,10 @@ void Quadrante::pulisciCasella(int x, int y)
 	int j = calcolaCoordinata(y);
 	
 	if(exist(x, y))
+	{
 		griglia.at(i).at(j).setSporco(false);
+		griglia.at(i).at(j).setExist(true);
+	}
 }
 
 void Quadrante::sporcaCasella(int x, int y)

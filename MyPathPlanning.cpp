@@ -7,8 +7,6 @@
 #include "MyPathPlanning.h"
 
 
-
-
 MyPathPlanning::MyPathPlanning(int unit, Mappa* mappa, ArRobot* robot) {
 	// TODO Auto-generated constructor stub
 	this->unit=unit;
@@ -35,11 +33,11 @@ void MyPathPlanning::percorri()
 	// Collision avoidance actions at higher priority
 	ArActionStallRecover recover("stall recover",unit/11);
 	ArActionBumpers bumpers;
-	//ArActionLimiterForwards limiterAction("speed limiter far", unit/100, unit, 200);
-	ArActionLimiterForwards limiterAction("speed limiter far", 200, 1000, 200, 1);
+	ArActionLimiterForwards limiterAction("speed limiter far", unit/100, unit, 110);
+	//ArActionLimiterForwards limiterAction("speed limiter far", 200, 1000, 200, 1);
 	
-	//ArActionAvoidFront avoidFrontNear("Avoid Front Near", unit/10, 200, 45);
-	ArActionAvoidFront avoidFrontNear("Avoid Front Near", 450, 200, 15);
+	ArActionAvoidFront avoidFrontNear("Avoid Front Near", unit/3, 110, 45);
+	//ArActionAvoidFront avoidFrontNear("Avoid Front Near", 450, 200, 15);
 	
 	robot->addAction(&recover, 100);
 	robot->addAction(&bumpers, 75);
@@ -138,9 +136,9 @@ void MyPathPlanning::percorri()
 			}
 		}
 		ArPose current_position = robot->getPose();
-		direction = this->approssimation2(current_position.getTh());
-		//cout<<"direzione del robot non approssimata"<<current_position.getTh()<<endl;
-		//cout<<"direzione del robot"<<direction<<endl;
+		direction = this->approssimation2(current_position.getTh()); // modificato segno current position getTh
+		cout<<"direzione del robot non approssimata: "<<current_position.getTh()<<endl;
+		cout<<"direzione del robot: "<<direction<<endl;
 		//cout<<"prima di scelta euristica"<<endl;
 		int futura_direzione = this->sceltaEuristica(x,y,direction);
 		// cout<<"prima di scelta euristica"<<endl;
@@ -206,7 +204,7 @@ void MyPathPlanning::percorri()
 		this->mappa->toString();
 		cout << endl;
 		cout<<"### FINE CICLO ###"<<endl<<endl<<endl;
-		ArUtil::sleep(13000);
+		ArUtil::sleep(300);
 }
 cout<<"uscita dal ciclo"<<endl;
 
@@ -224,6 +222,8 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
 	int indice_casella_max=0;
 	int direzione_max=direzione;
 	bool casella_non_visitata=false;
+				
+int euristiche_uguali=-1;
 	//la direzione migliore è quella di andare avanti seguendo la propria direzione che all'inizio corrisponde alla direzione 0
 	for(int i=0;i<8;i++)
 	{
@@ -231,25 +231,25 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
 		int direzione_analizzata=(direzione+i)%8;
 		// cout<<"casella da valutare "<<x[i]<<" , "<<y[i]<<endl;
 		//cout<<"direzione, direzione analizzata "<<direzione<<" , "<<direzione_analizzata<<endl;
-		Casella* casella=mappa->getCasella(x[i],y[i]);
+		Casella* casella=mappa->getCasella(x[direzione_analizzata],y[direzione_analizzata]);
 		//cout<<"ho ricevuto la casella"<<endl;
 
-		if(casella->isOstacolo()==false&& casella->isExist())
+		if(!casella->isOstacolo() && casella->isExist()) // se è libera ed esiste
 		{
       			euristica=euristica+12;
 		}
-		if(casella->isExist()==false)
+		if(!casella->isExist()) // la casella esiste nella struttura dati ma non l'abbiamo ancora letta
 	 	{
 			euristica=euristica+1;
-			casella_non_visitata=true;
+			casella_non_visitata=true; // usato per la terminazione della pulizia
 	 	}
-		if(casella->isSporco()==true && casella->isExist())
+		if(casella->isSporco() && casella->isExist())
 		{
-			if(direzione_analizzata==direzione)
+			if(direzione_analizzata == direzione)
 			{
-				euristica=euristica+6;
+				euristica = euristica + 6; 
 			}
-			if(direzione_analizzata==(direzione+1)%8||direzione_analizzata==(direzione+7)%8)
+			if(direzione_analizzata == (direzione+1)%8  ||  direzione_analizzata == (direzione+7)%8)
 			{
 				euristica=euristica+5;
 			}
@@ -266,6 +266,7 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
 				euristica=euristica+2;
 			}
     		}
+
 		if(euristica>euristica_max)
 		{
 			euristica_max=euristica;
@@ -275,16 +276,23 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
 		{
 			if(euristica==euristica_max)
 			{
-				direzione_max=this->valutazioneEuristicheUguali(x, y, direzione_max, direzione_analizzata);
+				direzione_max=this->valutazioneEuristicheUguali(x, y, direzione_analizzata, direzione_max);
+				//cout << "direzione migliore " << direzione_max << endl;
+euristiche_uguali=direzione_max;
+
 			}
 		}
-		//cout<<"euristica"<<euristica<<endl;
+		//cout<<"euristica "<<euristica<<endl;
 		//cout<<"direzione "<<direzione_analizzata<<endl;
 		if(direzione_analizzata==direzione_max)
 		{
 			indice_casella_max=i;
 		}
 	}
+	if(euristiche_uguali==direzione_max)
+{
+cout<<"euristica scelta tra uguali: "<<euristiche_uguali<<endl;
+}
 	//cout << "euristica max" << euristica_max << endl;
 	//cout << "direzione migliore " << direzione_max << endl;
 	std::vector<Casella>  lista;
@@ -294,7 +302,7 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
 
 		Casella da_controllare=lista[i];
 		//Per essere una casella sporca deve essere sporca e anche esistere, per evitare che il robot cerchi di pulire anche caselle che non esistono realmente
-		if(da_controllare.isSporco()==true&&da_controllare.isExist()==true)
+		if(da_controllare.isSporco() == true  &&  da_controllare.isExist() == true)
 		{
 			all_cleaned=false;
 		}
@@ -302,11 +310,11 @@ int MyPathPlanning::sceltaEuristica(int x[],int y[], int direzione)
 	//Se ho pulito tutte le caselle della mappa corrente e nell'intorno del robot non esistono caselle che non sono
 	//state viste in precedenza allora ho finito
 	//il controllo sulle caselle è stato aggiunto per evitare che il robot finisca subito se inizia rivolto verso il muro
-	if(all_cleaned==true&&casella_non_visitata==false)
+	if(all_cleaned == true  &&  casella_non_visitata == false)
 	{
 		return -1; // significa che ha pulito tutto
 	}
-	return indice_casella_max;
+	return direzione_max;
 }
 
 int MyPathPlanning::valutazioneEuristicheUguali(int x[],int y[], int direzione1, int direzione2)
@@ -318,6 +326,8 @@ int MyPathPlanning::valutazioneEuristicheUguali(int x[],int y[], int direzione1,
 
 	std::vector<Casella> lista;
 
+	//cout << "direzione da controllare: " << direzione1 << endl;
+	//cout << "direzione massima: " << direzione2 << endl;
 	mappa->getTutteCaselle(&lista);
 	for(int i=0;i<(int)lista.size();i++)
 	{
@@ -337,47 +347,85 @@ int MyPathPlanning::valutazioneEuristicheUguali(int x[],int y[], int direzione1,
 			//trasformazione delle coordinate del robot nel sistema di riferimento cartesiano "nostro"
 			int my_position[2];
 			MyUtil::coordinateFromRobotToMine(x_robot, y_robot, my_position); 
-			double angolo_casella=fromCartToPolar(my_position[0],my_position[1],x_casella,y_casella);
+			double angolo_casella=fromCartToPolar(my_position[0],my_position[1],x_casella,y_casella);			
+			//cout << "casella da controllare x = " << da_controllare.getX() << " y = " << da_controllare.getY() << endl;
+			//cout << "angolo_casella: " << angolo_casella << endl;
 
-			if((angolo1+22.5)<=angolo_casella&&(angolo1-22.5)>=angolo_casella)
+			if(angolo1 == 180)
 			{
-				sommatoria_settore1++;
-				if(da_controllare.isSporco()==true)
+				if(angolo_casella <= (-180+22.5)   ||  angolo_casella >= (180-22.5))
 				{
-					sommatoria_settore1_sporco++;
+					sommatoria_settore1++;
+					if(da_controllare.isSporco()==true)
+					{
+						sommatoria_settore1_sporco++;
+					}
 				}
 			}
-
-
-			if((angolo2+22.5)<=angolo_casella&&(angolo2-22.5)>=angolo_casella)
+			else
 			{
-				sommatoria_settore2++;
-				if(da_controllare.isSporco()==true)
+				if(angolo_casella >= (angolo1-22.5)  &&  angolo_casella <= (angolo1+22.5))
 				{
-					sommatoria_settore2_sporco++;
+					sommatoria_settore1++;
+					if(da_controllare.isSporco()==true)
+					{
+						sommatoria_settore1_sporco++;
+					}
 				}
 			}
-    	  }
+			if(angolo2 == 180)
+			{
+				if(angolo_casella <= (-180+22.5)   ||  angolo_casella >= (180-22.5))
+				{
+					sommatoria_settore2++;
+					if(da_controllare.isSporco()==true)
+					{
+						sommatoria_settore2_sporco++;
+					}
+				}
+			}
+			else
+			{
+				if(angolo_casella >= (angolo2-22.5)  &&  angolo_casella <= (angolo2+22.5))
+				{
+					sommatoria_settore2++;
+					if(da_controllare.isSporco()==true)
+					{
+						sommatoria_settore2_sporco++;
+					}
+				}
+			}
+		}
 
-    }
-    double media1=sommatoria_settore1_sporco/sommatoria_settore1;
-    double media2=sommatoria_settore2_sporco/sommatoria_settore2;
-    if(media2>media1&&media1>0)
-    {
-    	return direzione1;
-    }
-    else
-    {
-    	if(media2>0)
-    	{
-    		return direzione2;
-    	}
+	}
+	double media1=sommatoria_settore1_sporco/sommatoria_settore1;
+	double media2=sommatoria_settore2_sporco/sommatoria_settore2;
+	/*if(media2>media1&&media1>0)
+	{
+		return direzione1;
+	}
+	else
+	{
+		if(media2>0)
+		{
+			return direzione2;
+		}
+		return direzione1;
+	}*/
+	if(media2 > media1  &&  media2>0)
+	{
+		return direzione2;
+	}
+	else
+	{
+		if(media1>0)
+		{
+			return direzione1;
+		}
+		return direzione2;
+	}
+}
 
-    	return direzione1;
-
-    }
-
-  }
 void MyPathPlanning::getXY(int* x, int* y)
 {
 	 ArPose current_position = robot->getPose();
@@ -387,56 +435,74 @@ void MyPathPlanning::getXY(int* x, int* y)
   double MyPathPlanning::fromDirectionToAngle(int direzione)
   {
 		double angolo;
-		if(direzione<3)
+		switch (direzione)
+		{
+			case 0:
+				return 90.;
+			case 1:
+				return 45.;
+			case 2:
+				return 0.;
+			case 3:
+				return -45.;
+			case 4:
+				return -90.;
+			case 5:
+				return -135.;
+			case 6:
+				return 180.;
+			case 7:
+				return 135.;
+		}
+		/*if(direzione<3)
 		{
 			angolo=90-45*direzione;
 		}
 		else
 		{
 			angolo=360-45*(direzione-2);
-		}
-		return angolo;
-
+		}*/
   }
 
   double MyPathPlanning::fromCartToPolar(int origin_x, int origin_y, int x, int y)
-  {
-	  return atan((double)(origin_x+x)/(double)(origin_y+y));
+  {		
+	double polar = atan2((double)(origin_y+y),(double)(origin_x+x)) * 180 / M_PI;
+	if (polar == -180)
+		return 180;
+	  return atan2((double)(origin_y+y),(double)(origin_x+x)) * 180 / M_PI;
   }
 
 
 int MyPathPlanning::approssimation2(double angle)
 {
-
-
 	if(angle<=(0+22.5)&&angle>=(0-22.5))
 	{
 		return 0;
 	}
 	if(angle<=(90+22.5)&&angle>=(90-22.5))
 	{
-		return 2;
+		return 6;
 	}
 	if(angle<=(-90+22.5)&&angle>=(-90-22.5))
 	{
-		return 6;
+		return 2;
 	}
 	if(angle<=(45+22.5)&&angle>=(45-22.5))
 	{
-		return 1;
+		return 7;
 	}
 
 	if(angle<=(-45+22.5)&&angle>=(-45-22.5))
 	{
-		return 7;
+		return 1;
 	}
 	if(angle<=(-135+22.5)&&angle>=(-135-22.5))
 	{
-		return 5;
+		return 3;
 	}
 	if(angle<=(135+22.5)&&angle>=(135-22.5))
 	{
-		return 3;
+		return 5;
 	}
 	return 4;
 

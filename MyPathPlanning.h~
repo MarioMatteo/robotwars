@@ -5,19 +5,22 @@
  *      Author: gabrielefcg
  */
 
-
-#include "Mappa.h"
-#include "Casella.h"
-#include <math.h>
-#include "Aria.h"
-
 #ifndef MYPATHPLANNING_H_
 #define MYPATHPLANNING_H_
-
+#include "Mappa.h"
+#include "Casella.h"
+#include "Aria.h"
+#include "SensorReadingBox.h"
+#include "MyUtil.h"
+#include <math.h>
 
 class MyPathPlanning {
 private:
 	double fromDirectionToAngle(int direzione);
+	//int num_cell = 3;
+	//int duration = 3000;
+	int num_cell;
+	int duration;
 	int unit;
 	Mappa* mappa;
 	ArRobot* robot;
@@ -27,8 +30,10 @@ private:
 	double MediaSettore(int direzione, Casella casella);
 	void getXY(int* x, int* y);
 	int approssimation2(double angle);
+	void MyGoto(int direzione);
+
 public:
-	MyPathPlanning(int unit, Mappa mappa, ArRobot robot)
+	MyPathPlanning(int unit, Mappa* mappa, ArRobot* robot);
 
 	virtual ~MyPathPlanning();
 	void percorri();

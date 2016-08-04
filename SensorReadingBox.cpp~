@@ -426,7 +426,7 @@ void SensorReadingBox::readSensor()
 				}
 			}
 			break;*/
-		case 180:
+		case -180:
 		{
 			int rows_scan[] = {-1};
 			int cols_scan[] = {-1,0,1};
@@ -572,6 +572,10 @@ void SensorReadingBox::scan_for_obstacles(vector<int>& rows_ind, vector<int>& co
 
 					cout<<"casella libera  "<<x_temp<<" , "<<y_temp<<endl;
 				}
+			}
+			else
+			{
+				cout << "sto controllando la stessa casella del robot" << endl;
 			}
 		}
 	}
