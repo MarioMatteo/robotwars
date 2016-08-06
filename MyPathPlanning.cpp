@@ -335,7 +335,7 @@ int MyPathPlanning::valutazioneEuristicheUguali(int x[],int y[], int direzione1,
 		Casella da_controllare=lista[i];
 		if(da_controllare.isExist()==true)
 		{
-			double angolo1=this->fromDirectionToAngle(direzione1);
+			double angolo1=this->fromDirectionToAngle(direzione1); //Possibile problema
 			double angolo2=this->fromDirectionToAngle(direzione2);
 
 			int x_casella=da_controllare.getX();
@@ -453,7 +453,29 @@ void MyPathPlanning::getXY(int* x, int* y)
 				return 180.;
 			case 7:
 				return 135.;
+			default:
+				return 0.;
+
+		/*
+		case 0:
+			return 90.;
+		case 1:
+			return 135.;
+		case 2:
+			return 180.;
+		case 3:
+			return -135.;
+		case 4:
+			return -90.;
+		case 5:
+			return -45.;
+		case 6:
+			return 0.;
+		case 7:
+			return 45.;
+			*/
 		}
+
 		/*if(direzione<3)
 		{
 			angolo=90-45*direzione;
@@ -466,10 +488,10 @@ void MyPathPlanning::getXY(int* x, int* y)
 
   double MyPathPlanning::fromCartToPolar(int origin_x, int origin_y, int x, int y)
   {		
-	double polar = atan2((double)(origin_y+y),(double)(origin_x+x)) * 180 / M_PI;
+	double polar = atan2((double)(y-origin_y),(double)(x-origin_x)) * 180 / M_PI;
 	if (polar == -180)
 		return 180;
-	  return atan2((double)(origin_y+y),(double)(origin_x+x)) * 180 / M_PI;
+	  return atan2((double)(y-origin_y),(double)(x-origin_x)) * 180 / M_PI;
   }
 
 

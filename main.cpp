@@ -8,7 +8,7 @@
 int main(int argc, char** argv) 
 {
 
-	int unit = 600;
+	int unit = 2000;
 	ArRobot robot;
 
 
